@@ -13,6 +13,7 @@
 % COMENTAR ANTES DE SUBMETER!
 % Comando temporarios
 \usepackage{color}
+\usepackage[normalem]{ulem}
 \newcommand{\new}[1]{\textcolor{blue}{#1}}
 \newcommand{\old}[1]{\textcolor{MyDarkViolet}{\sout{#1}}}
 \newcommand{\att}[1]{\textcolor{red}{#1}}
@@ -71,7 +72,8 @@ forward modelling algorithm}
 H.~B.~Santos}
 \maketitle
 
-
+% Wanderson, geralmente a EAGE limita o numero de caracteres no abstract. 
+% Pode ser que tenhamos que edita-lo no momento de submeter.
 \begin{abstract}
 The Amplitude Variation with Offset (AVO) inversion has been studied in 
 order to recover the P-wave, S-wave velocity and density parameters of the 
@@ -81,8 +83,8 @@ by how good is the initial information in model based schemes. An analyse
 to verify the effects of the dependency between P-wave, S-wave velocity 
 and density in the recovered parameters was also performed using the 
 Gardner and Castagna empirical relations as constrains. However, the 
-forward modelling is the main resource consumer in such techniques. The 
-genetic algorithm was implemented in FORTRAN 77/90  and a \textit{table 
+forward modelling is the main resource consumer in such techniques. 
+We have implemented a genetic algorithm and a \textit{table 
 based} ray theory algorithm was developed in order to allow a large amount 
 of models in the global search. Our results show that the genetic algorithm 
 was capable to recover the physical parameters with good agreement for the 
@@ -95,17 +97,19 @@ than 30 minutes.
 \end{abstract}
 
 \newpage
+% Wanderson, sinceramente eu nao sei se eh preciso escrever que o codigo 
+%esta em Fortran, ate pq isso pode mudar com o tempo/necessidade.
 \section{Introduction}
 The AVO (Amplitude Variation with Offset) anomaly has been widely used in 
 the industry as a direct hydrocarbon indicator. However, applications to 
 inverse problems has also risen interest in the phenomenon. The 
 formulation to compute an estimative of the amplitudes with increasing 
-angle (offset) of incidence is classicaly attributed to \cite{Zoeppritz1919} 
+angle (offset) of incidence is classically attributed to \cite{Zoeppritz1919} 
 and \cite{Knott1899} for plane waves. \cite{Rosa1976} derived and verified 
 the ill-posedness of the Zoeppritz equations meaning that we have multiple  
 combinations of input to produce the same output.  Moreover, 
 \cite{Stoffa1991}, \cite{Mallick1995} and others suggest global optimization 
-schemes to treat the AVO inversion due to its multiparametric formulation 
+schemes to treat the AVO inversion due to its multi-parametric formulation 
 which implies a very complex solution space with many local minima which 
 harden the process of finding good solutions. However, the process of 
 global optimizations requires many forward modellings which increase 
@@ -114,20 +118,20 @@ literature uses forward modelling algorithms based in techniques to solve
 the wave equation, therefore demanding great computational power. This 
 project believes that ray theory is enough for many applications in 
 exploration seismology and provide an implementation of a forward 
-modelling algorithm called \textit{table-based ray theory} in FORTRAN 
-77/90 in order to verify its performance and boosts in computations of 
+modelling algorithm called \textit{table-based ray theory} \old{in FORTRAN 
+77/90} in order to verify its performance and boosts in computations of 
 global optimizations. The technique implemented to perform the search in 
 the solution space was the genetic algorithm based on findings of 
-\cite{Stoffa1991} and \cite{Sen1992} and using the Gardner and Castagna 
-empirical relationships as constrains to verify the dependency among the 
-parameters.
+\cite{Stoffa1991} and \cite{Sen1992} and using the \att{Gardner and 
+Castagna} empirical relationships as constrains to verify the dependency 
+among the parameters.
 
 \section{Synthetic CMP seismogram: forward modelling}
-The forward modelling algorithm implemented is the \textit{Table-based ray 
+The forward modelling algorithm implemented is the \textit{table-based ray 
 tracing}. The Earth model assumed is the isotropic layer cake model where 
 the parametric equation are used to compute the two-way traveltime 
-\cite{Slotnick}, the equations are given by
-
+\citep{Geyer1959}, the equations are given by
+%!
 \begin{eqnarray}
 x & = & 2\sum_{i=1}^{n} \frac {h_{i}pv_{i}} {(1 -
 p^{2}v_{i}^{2})^{1/2}} \ ,\label{eq.x} \\
@@ -137,34 +141,34 @@ t & = & 2\sum_{i=1}^{n} \frac {h_{i}} {v_{i}(1 - p^{2}v_{i}^{2})^{1/2}} \ ,
 %
 where $h_{i}$, $v_{i}$ and $p$ are, respectively, the thickness of the layers, 
 the velocities and the ray parameter which is defined by
-
+%!
 \begin{equation}
 p = \frac{\sin(\theta_{i})}{v_{i}}\ ,\label{eq.p}
 \end{equation}
-
+%!
 where $\theta_i$ is the angle between the seismic ray and the vertical in the 
 $i$-th layer. Using a sonic log or other vertical velocity information is 
-possible to build 4 different tables (\textit{velocity, angle, traveltime, 
+possible to build four different tables (\textit{velocity, angle, traveltime, 
 offsets} using equations \ref{eq.x}, \ref{eq.t} and the Snell's Law to figure out 
 the transmitted angle to the layer below.
 
 To start the process we assign angles varying from 0 to 90 degree in the first 
-row of the \textit{angle table} . The step between each cell will also 
+row of the \textit{angle table}. The step between each cell will also 
 determine the accuracy of the modelling. Then, using Snell's Law and the 
 velocity of the first layer (first row of velocity table) we compute the 
 transmitted angle. In this fashion, recursively, we fill the \textit{angle table}. 
 The next step for the synthetic seismogram modelling requires the 
 calculation of the reflectivity at each interface. It was used the Shuey's 
 approximation \cite{Shuey1985} given by
-
+%!
 \begin{equation}
 R_{P} (\theta) = A + B\sin^{2}(\theta) + C\sin^{2}(\theta)\tan^{2}(\theta)
 \ , \label{eq.shuey}
 \end{equation}
-
+%!
 where $\theta$ is the incidence angle and the terms $A$, $B$ and $C$ are 
 defined as
-
+%?!
 \begin{equation}
 \begin{split}
 A & = \frac{1}{2} \left(\frac{\triangle V_{P}}{V_{P}}     +
@@ -175,13 +179,13 @@ V_{S}}{V_{P}}\right)^{2}  \left(\frac{2\triangle V_{S}}{V_{S}} +
 C & = \frac{1}{2} \left(\frac{\triangle V_{P}}{V_{P}} \right) \ .
 \end{split}
 \end{equation}
-
+%!
 where in these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$, $\triangle 
 V_{S} = V_{S2} - V_{S1}$, $\triangle \rho = \rho_{2} - \rho_{1}$, where 
 $V_{P}$, $V_{S}$ e $\rho$ are arithmetic averages from P-wave, S-wave 
 velocities and the density.
 
-Finally in order to build the CMP synthetic seismogram we define which are 
+Finally, in order to build the CMP synthetic seismogram we define which are 
 the offsets to model and start a search row-by-row inside the \textit{offset 
 table} looking for the requested offsets. Once the value is found, we go into 
 the same cell position inside the \textit{angle table}, \textit{traveltime table} 
@@ -236,15 +240,15 @@ attributes, polar anisotropic media, etc.
     \path [line] (sim) |- (stop);
   
 \end{tikzpicture}
-\caption{Flowchart of the genetic algorithm implemented in FORTRAN 
+\caption{Flowchart of the genetic algorithm. % implemented in FORTRAN 
 77/90.}\label{fig.fluxo}
 \end{wrapfigure}
 
-The genetic algorithm (Figure 1) is a technique used to perform global 
-optimizations based in the natural selection \cite{Holland1975}. In order to 
-simulate this process, the algorithm constantly modify the initial 
+The genetic algorithm (Figure~\ref{fig.fluxo}) is a technique used to perform 
+global optimizations based in the natural selection \citep{Holland1975}. In 
+order to simulate this process, the algorithm constantly modify the initial 
 pseudo-random population in order to reach local minima positions. 
-Initially each member of the pseudo-random population is a potential 
+Initially, each member of the pseudo-random population is a potential 
 solution to the problem and after some iterations the genetic algorithm will 
 guide the population to the best fit positions.
 
@@ -256,11 +260,12 @@ information to provide exploration of the solution space. In order to select
 the members of the population we need to measure the fitness between each 
 potential solution and the data we want to optimize. The objective function 
 used was proposed by \cite{Porsani2000} and is given by
-
+%!
 \begin{equation}
-h = \frac{2y^{T} x} {y^{T}y + x^{T}x} \label{eq.Porsani}
-\end{equation} 
-
+h = \frac{2y^{T} x} {y^{T}y + x^{T}x} \ ,
+\label{eq.Porsani}
+\end{equation}
+%!
 where, $x$ e $y$ are respectively the observed data and modelled data in 
 the time domain and  $x^{T}$, $y^{T}$ are their transposes. In order to 
 constrain the inverse problem due to the dependency between S-wave 
@@ -273,14 +278,15 @@ A synthetic model was used in order to verify the global optimization
 method for AVO inversion and its relationships with the prior informations 
 (Gardner and Castagna constrains) and also to analyse the performance of 
 the forward modelling algorithm proposed. The physical parameters for the 
-synthetic model is described in the Table 1. The thickness between the two 
+synthetic model is described in the Table~\ref{tab.model}. The thickness 
+between the two 
 inner layers was chosen to be small enough to allow interaction between the 
 wavelets.
 
 \begin{wraptable}{l}{0.5\textwidth}
-\caption{eee}
+\caption{Model parameters.}
 \begin{adjustbox}{max width=0.46\textwidth}
-\label{model}
+\label{tab.model}
 \begin{tabular}{@{}|
 >{\columncolor[HTML]{9B9B9B}}c |cccc@{}}
 \toprule
@@ -293,54 +299,86 @@ wavelets.
 \end{adjustbox}
 \end{wraptable}
 
-The parameters used in the forward modelling shown in Figure 1 was a zero 
-phase Ricker wavelet with central frequency in 40Hz and discretization time 
-of 2ms. In order to perform the global optimization the CMP gathers have to 
-be previously corrected from the \textit{normal moveout}.
-\\
+The parameters used in the forward modelling shown in 
+Figure~\ref{fig.fluxo} was a zero phase Ricker wavelet with central frequency 
+in 40~Hz and discretization time of 2~ms. In order to perform the global 
+optimization the CMP gathers have to be previously corrected from the 
+\textit{normal moveout}.
+%!
 The parameters used in the \textit{genetic algorithm} is given by 
 \textit{selection rate} of $50\%$, $P_{mutation}$ = 0.1, $P_{update}$ = 
 0.47, $P_{crossover}$ = 0.90, 1000 members in the population and a 
 convergence criterion of 200 iterations.
 
 In the following results only the parameters from the fourth layer of the 
-model from Table \ref{model} will be shown in more detail due to the limit 
-of space. The Figure 2 shows the evolution of the genetic algorithm 
-solutions for the P-wave velocity parameter in the fourth layer when 
-running with and without the Gardner and Castagna constrains. As we can 
-see in Figure 2(a), after few iterations the algorithm is already guiding all the 
-members in the population close to the correct position in the solution 
-space.
+model from Table~\ref{tab.model} will be shown in more detail due to the 
+limit of space. The Figure~\ref{fig2} shows the evolution of the genetic 
+algorithm solutions for the P-wave velocity parameter in the fourth layer 
+when running with and without the Gardner and Castagna constrains. As we 
+can see in Figure~\ref{fig2}(a), after few iterations the algorithm is already 
+guiding all the members in the population close to the correct position in 
+the solution space.
 
-However, the Figure 2(b) shows that even with the lack of additional 
+However, the Figure~\ref{fig2}(b) shows that even with the lack of additional 
 constrains to restrict the solutions, the algorithm is leading the population 
 to particular solutions which are not so close to the correct one but are 
-good answers to the inverse problem as we can see in Table 2.
+good answers to the inverse problem as we can see in 
+Table~\ref{tab.recovered}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.32]{iterations_vp4_refeita}
-   \caption{testE}
+\caption{Evolution of the genetic algorithm solutions for the P-wave 
+velocity parameter in the fourth layer when running with and without the 
+Gardner and Castagna constrains.}
+%% Wanderson, assim que tivermos as figuras finais a gente tem que voltar 
+%%aqui e melhorar a descricao
+\label{fig2}
 \end{figure}
 
-In Table 2 we can see the values for the best model recovered with and 
-without the constrains in the parameters. The algorithm performed 301.000 
-forward modelling in 36 minutes. Even with more than $20\%$ of relative 
-error in average, the best model recovered without the constrains still 
-produce a very similar CMP gather as we can verify by the correlation 
-coefficient value.
+In Table~\ref{tab.recovered} we can see the values for the best model 
+recovered with and without the constrains in the parameters. The algorithm 
+performed 301.000 forward modelling in 36 minutes. Even with more than 
+$20\%$ of relative error in average, the best model recovered without the 
+constrains still produce a very similar CMP gather as we can verify by the 
+correlation coefficient value.
 
-
+%% Wanderson, vc fez a tab no site que eu te indiquei?
 \begin{table}[h!]
-\caption{My caption}
+%\caption{Recovered parameters of the model in the fourth layer when 
+%running with and without the Gardner and Castagna constrains.}
+\caption{Recovered parameters of the model with and without constrains.}
 \begin{adjustbox}{max width=\textwidth}
-\label{my-label}
+\label{tab.recovered}
 \begin{tabular}{@{}|c|ccccc@{}}
 \toprule
 \rowcolor[HTML]{C0C0C0} 
-\textbf{Parameters}                                                                                & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Synthetic Model}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered Model\\ (with constrains)\end{tabular}}}                                                             & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered Model\\ (without constrains)\end{tabular}}}                                                         \\ \midrule
+\textbf{Parameters}                                                                                & 
+\multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Synthetic Model}} & 
+\multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered
+ Model\\ (with 
+constrains)\end{tabular}}}                                                             & 
+\multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered
+ Model\\ (without 
+constrains)\end{tabular}}}                                                         \\ \midrule
 \rowcolor[HTML]{C0C0C0} 
-                                                                                                   & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}}                         & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative Percentual \\ Error\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative Percentual\\ Error\end{tabular}}} \\ \midrule
+                                                                                                   & 
+                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}}
+                                                                                                                        
+                                                                                                       & 
+                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}}
+                                                                                                    & 
+                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative
+                                                                                                    Percentual 
+                                                                                                   \\ 
+                                                                                                   Error\end{tabular}}}
+                                                                                                    & 
+                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}}
+                                                                                                    & 
+                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative
+                                                                                                    Percentual\\ 
+                                                                                                   Error\end{tabular}}}
+                                                                                                    \\ \midrule
 \cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2000                                          & \cellcolor[HTML]{9AFF99}2000                                     & \cellcolor[HTML]{9AFF99}0.00                                                                                               & \cellcolor[HTML]{BBDAFF}2002                                     & \cellcolor[HTML]{BBDAFF}-0.10                                                                                             \\
 \cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2800                                          & \cellcolor[HTML]{9AFF99}2788                                     & \cellcolor[HTML]{9AFF99}0.43                                                                                               & \cellcolor[HTML]{BBDAFF}2699                                     & \cellcolor[HTML]{BBDAFF}3.61                                                                                              \\
 \cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2300                                          & \cellcolor[HTML]{9AFF99}2280                                     & \cellcolor[HTML]{9AFF99}0.87                                                                                               & \cellcolor[HTML]{BBDAFF}2394                                     & \cellcolor[HTML]{BBDAFF}-4.09                                                                                             \\
@@ -366,7 +404,7 @@ regular computer. The constrains are also helpful in the process however the
 result without constrains indicate that we can still converge to particular 
 results. The genetic algorithm will be formulated inside the Bayesian 
 framework to provide solid statistical informations about the distribution of 
-the solutions during the iterations. It's expected to be able to visualize 
+the solutions during the iterations. It is expected to be able to visualize 
 distinguishable concentration of particular solutions which could be useful 
 to determine possible scenarios for the recovered parameters. Finally, for 
 future work in this project will also introduce errors in the models and an 
