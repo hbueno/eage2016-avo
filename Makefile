@@ -1,4 +1,4 @@
-PROJECT=abstract
+PROJECT=EAGE2016
 TEX=pdflatex
 BIBTEX=bibtex
 BUILDTEX=$(TEX) $(PROJECT).tex
