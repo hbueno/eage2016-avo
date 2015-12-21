@@ -8,6 +8,9 @@ all:
 		$(BIBTEX) $(PROJECT)
 		$(BUILDTEX)
 		$(BUILDTEX)
+		spdf.py $(PROJECT).pdf 1
+		mv $(PROJECT)_part1.pdf $(PROJECT)-capa.pdf
+		mv $(PROJECT)_part2.pdf $(PROJECT)-abstract.pdf
 
 view:
 		open -a Preview $(PROJECT).pdf
