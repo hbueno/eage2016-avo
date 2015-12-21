@@ -81,8 +81,7 @@ stratified medium. A global optimization technique was used due to the
 multi parametric behaviour of the AVO inversions which is strongly affected 
 by how good is the initial information in model based schemes. An analyse 
 to verify the effects of the dependency between P-wave, S-wave velocity 
-and density in the recovered parameters was also performed using the 
-Gardner and Castagna empirical relations as constrains. However, the 
+and density in the recovered parameters was also performed using empirical relations as constrains. However, the 
 forward modelling is the main resource consumer in such techniques. 
 We have implemented a genetic algorithm and a \textit{table 
 based} ray theory algorithm was developed in order to allow a large amount 
@@ -118,13 +117,13 @@ literature uses forward modelling algorithms based in techniques to solve
 the wave equation, therefore demanding great computational power. This 
 project believes that ray theory is enough for many applications in 
 exploration seismology and provide an implementation of a forward 
-modelling algorithm called \textit{table-based ray theory} \old{in FORTRAN 
-77/90} in order to verify its performance and boosts in computations of 
-global optimizations. The technique implemented to perform the search in 
-the solution space was the genetic algorithm based on findings of 
-\cite{Stoffa1991} and \cite{Sen1992} and using the \cite{Gardner1974} and
-\cite{Castagna1975} empirical relationships as constrains to verify the
-dependency among the parameters.
+modelling algorithm called \textit{table-based ray theory} in order to
+verify its performance and boosts in computations of global optimizations.
+The technique implemented to perform the search in the solution space was
+the genetic algorithm based on findings of \cite{Stoffa1991} and
+\cite{Sen1992} and using the \cite{Gardner1974} and \cite{Castagna1975}
+empirical relationships as constrains to verify the dependency among the
+parameters.
 
 \section{Synthetic CMP seismogram: forward modelling}
 The forward modelling algorithm implemented is the \textit{table-based ray 
