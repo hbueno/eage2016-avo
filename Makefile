@@ -10,7 +10,7 @@ all:
 		$(BUILDTEX)
 
 view:
-		open -a Skim $(PROJECT).pdf
+		open -a Preview $(PROJECT).pdf
 
 clean-all:
 		rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.pdf *.toc *.out *~ *.gz
