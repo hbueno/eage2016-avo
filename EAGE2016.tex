@@ -59,9 +59,9 @@ text width=3em, text centered, rounded corners, minimum height=2em]
 \tikzstyle{blockf} = [rectangle, draw, fill=blue!20, 
 text width=16em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+\tikzstyle{cloud} = [draw, ellipse,fill=blue!20, node distance=3cm,
 minimum height=3em]
-\tikzstyle{cloudr} = [draw, ellipse,fill=green!20, node distance=3cm,
+\tikzstyle{cloudr} = [draw, ellipse,fill=blue!20, node distance=3cm,
 minimum height=3em]
 
 \begin{document}
@@ -233,13 +233,13 @@ extraction of AVO attributes, polar anisotropic media, etc.
     \path [line] (init) -- (identify);
     \path [line] (identify) -- (pop);
     \path [line] (pop) -- (evaluate);
-    \path [line,dashed] (expert) -- (init);
+    \path [line] (expert) -- (init);
     \path [line] (evaluate) --  node {no} (select);
     \path [line] (select) -- (reprod);
-    \path [line,dashed] (reprod) -- (crossover);
-    \path [line, dashed] (crossover) -- (mutation);
-    \path [line, dashed] (mutation) -- (update);
-    \path [line, dashed] (update) -- (newpop);  
+    \path [line] (reprod) -- (crossover);
+    \path [line] (crossover) -- (mutation);
+    \path [line] (mutation) -- (update);
+    \path [line] (update) -- (newpop);  
     \path [line] (newpop) |- (identify);
     \path [line] (evaluate) -| (sim);
     \path [line] (sim) |- (stop);
