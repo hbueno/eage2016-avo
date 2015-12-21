@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{adjustbox}
+\usepackage{subfigure}
 
 % Path to figures
 \graphicspath{{Fig/}}
@@ -27,10 +28,10 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true}
 \hypersetup{citecolor=blue}
-\hypersetup{pdftitle={Global optimization for AVO inversion: Analysis of ray 
+\hypersetup{pdftitle={Global optimization for AVO inversion: analysis of ray 
 theory based forward modelling algorithm}}
 \hypersetup{pdfauthor={W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, 
-J.~Schleicher and H.~B.~Santos}}
+H.~B.~Santos, J.~Schleicher and A.~Novais}}
 % For making a print without color links
 \hypersetup{linkcolor=black,citecolor=black,filecolor=black,urlcolor=black}
 \hypersetup{linkcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue}
@@ -43,69 +44,73 @@ J.~Schleicher and H.~B.~Santos}}
 \usetikzlibrary{shapes,arrows} 
 
 % definindo blocos para o fluxograma
-\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
-    text width=6.5em, text badly centered, node distance=3cm, inner 
-    sep=0pt]
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=6.5em, text 
+badly centered, node distance=3cm, inner  sep=0pt]
 \tikzstyle{decisionmi} = [diamond, draw, fill=blue!20, 
-    text width=1.5em, text badly centered, node distance=3cm, inner 
-    sep=0pt]
+text width=1.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=16em, text centered, rounded corners, minimum height=4em]
+text width=16em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{blockm} = [rectangle, draw, fill=blue!20, 
-    text width=6em, text centered, rounded corners, minimum height=4em]
+text width=6em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{blockmg} = [rectangle, draw, fill=blue!20, 
-    text width=10em, text centered, rounded corners, minimum height=2em]
+text width=10em, text centered, rounded corners, minimum height=2em]
 \tikzstyle{blockmi} = [rectangle, draw, fill=blue!20, 
-    text width=3em, text centered, rounded corners, minimum height=2em]
+text width=3em, text centered, rounded corners, minimum height=2em]
 \tikzstyle{blockf} = [rectangle, draw, fill=blue!20, 
-    text width=16em, text centered, rounded corners, minimum height=4em]
+text width=16em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
-    minimum height=3em]
+minimum height=3em]
 \tikzstyle{cloudr} = [draw, ellipse,fill=green!20, node distance=3cm,
-    minimum height=3em]
+minimum height=3em]
 
 \begin{document}
-\title{Global optimization for AVO inversion: Analysis of ray theory based 
+\title{Global optimization for AVO inversion: analysis of ray theory based 
 forward modelling algorithm}
-\author{W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, J.~Schleicher and 
-H.~B.~Santos}
+\author{W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, H.~B.~Santos, 
+J.~Schleicher and A.~Novais}
 \maketitle
 
 % Wanderson, geralmente a EAGE limita o numero de caracteres no abstract. 
 % Pode ser que tenhamos que edita-lo no momento de submeter.
 \begin{abstract}
-The Amplitude Variation with Offset (AVO) inversion has been studied in 
+The amplitude variation with offset (AVO) inversion has been studied in 
 order to recover the P-wave, S-wave velocity and density parameters of the 
 stratified medium. A global optimization technique was used due to the 
-multi parametric behaviour of the AVO inversions which is strongly affected 
+multi-parametric behaviour of the AVO inversions which is strongly affected 
 by how good is the initial information in model based schemes. An analyse 
 to verify the effects of the dependency between P-wave, S-wave velocity 
-and density in the recovered parameters was also performed using empirical relations as constrains. However, the 
-forward modelling is the main resource consumer in such techniques. 
-We have implemented a genetic algorithm and a \textit{table 
-based} ray theory algorithm was developed in order to allow a large amount 
-of models in the global search. Our results show that the genetic algorithm 
-was capable to recover the physical parameters with good agreement for the 
-examples using the empirical constraints, but was also capable to converge 
-to particular solutions which was far from the correct answer, but good 
-answers to explain the observed dataset. The forward modelling algorithm 
-has shown excellent performance to be used in global optimization schemes 
-being able to compute more than 300.000 synthetic seismograms in less 
-than 30 minutes.
+and density in the recovered parameters was also performed using empirical 
+relations as constrains. However, the forward modelling is the main resource 
+consumer in such techniques. We have implemented a genetic algorithm 
+and a \textit{table based} ray theory algorithm was developed in order to 
+allow a large amount of models in the global search. Our results show that 
+the genetic algorithm was capable to recover the physical parameters with 
+good agreement for the examples using the empirical constraints, but was 
+also capable to converge to particular solutions which was far from the 
+correct answer, but good answers to explain the observed dataset. The 
+forward modelling algorithm has shown excellent performance to be used in 
+global optimization schemes allowing the use of a large number of members 
+in the population of the genetic algorithm.
+%%
+%% Wanderson, modifiquei essa parte, pois esses valores nao sao ou serao 
+%%constantes. Acho melhor deixar a informacao sem os numeros.
+%%The forward modelling algorithm has shown excellent performance to be 
+%%used in global optimization schemes being able to compute more than 
+%%300.000 synthetic seismograms in less than 30 minutes.
 \end{abstract}
 
 \newpage
 % Wanderson, sinceramente eu nao sei se eh preciso escrever que o codigo 
 %esta em Fortran, ate pq isso pode mudar com o tempo/necessidade.
 \section{Introduction}
-The AVO (Amplitude Variation with Offset) anomaly has been widely used in 
+The amplitude variation with offset (AVO) anomaly has been widely used in 
 the industry as a direct hydrocarbon indicator. However, applications to 
 inverse problems has also risen interest in the phenomenon. The 
 formulation to compute an estimative of the amplitudes with increasing 
 angle (offset) of incidence is classically attributed to \cite{Zoeppritz1919} 
 and \cite{Knott1899} for plane waves. \cite{Rosa1976} derived and verified 
-the ill-posedness of the Zoeppritz equations meaning that we have multiple  
+the ill-posedness of the Zoeppritz equations meaning that we have multiple 
 combinations of input to produce the same output.  Moreover, 
 \cite{Stoffa1991}, \cite{Mallick1995} and others suggest global optimization 
 schemes to treat the AVO inversion due to its multi-parametric formulation 
@@ -121,11 +126,11 @@ modelling algorithm called \textit{table-based ray theory} in order to
 verify its performance and boosts in computations of global optimizations.
 The technique implemented to perform the search in the solution space was
 the genetic algorithm based on findings of \cite{Stoffa1991} and
-\cite{Sen1992} and using the \cite{Gardner1974} and \cite{Castagna1975}
+\cite{Sen1992} and using the \cite{Gardner1974} and \cite{Castagna1985}
 empirical relationships as constrains to verify the dependency among the
 parameters.
 
-\section{Synthetic CMP seismogram: forward modelling}
+\section{Synthetic common-midpoint seismogram: forward modelling}
 The forward modelling algorithm implemented is the \textit{table-based ray 
 tracing}. The Earth model assumed is the isotropic layer cake model where 
 the parametric equation are used to compute the two-way traveltime 
@@ -158,7 +163,7 @@ velocity of the first layer (first row of velocity table) we compute the
 transmitted angle. In this fashion, recursively, we fill the \textit{angle table}. 
 The next step for the synthetic seismogram modelling requires the 
 calculation of the reflectivity at each interface. It was used the Shuey's 
-approximation \cite{Shuey1985} given by
+approximation \citep{Shuey1985} given by
 %!
 \begin{equation}
 R_{P} (\theta) = A + B\sin^{2}(\theta) + C\sin^{2}(\theta)\tan^{2}(\theta)
@@ -179,26 +184,27 @@ C & = \frac{1}{2} \left(\frac{\triangle V_{P}}{V_{P}} \right) \ .
 \end{split}
 \end{equation}
 %!
-where in these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$, $\triangle 
+In these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$, $\triangle 
 V_{S} = V_{S2} - V_{S1}$, $\triangle \rho = \rho_{2} - \rho_{1}$, where 
-$V_{P}$, $V_{S}$ e $\rho$ are arithmetic averages from P-wave, S-wave 
+$V_{P}$, $V_{S}$ e $\rho$ are arithmetic averages from P-wave and S-wave 
 velocities and the density.
 
-Finally, in order to build the CMP synthetic seismogram we define which are 
-the offsets to model and start a search row-by-row inside the \textit{offset 
-table} looking for the requested offsets. Once the value is found, we go into 
-the same cell position inside the \textit{angle table}, \textit{traveltime table} 
-and \textit{reflectivity table} to place the reflection coefficient from that 
-position in the correct time arrival inside the trace.
+Finally, in order to build the common-midpoint (CMP) synthetic 
+seismogram, we define which are the offsets to model and start a search 
+row-by-row inside the \textit{offset table} looking for the requested offsets. 
+Once the value is found, we go into the same cell position inside the 
+\textit{angle table}, \textit{traveltime table} and \textit{reflectivity table} to 
+place the reflection coefficient from that position in the correct time arrival 
+inside the trace.
 
 The algorithm is simple and provide the opportunity to be easily adapted to 
-study more complex effects such as the stretching in NMO correction, NMO 
-without stretch (Raytrace NMO correction), array effects which affect the 
-amplitude of the wave received by the streamer, easily extraction of AVO 
-attributes, polar anisotropic media, etc.
+study more complex effects such as the stretching in normal moveout (NMO) 
+correction, NMO without stretch (Raytrace NMO correction), array effects 
+which affect the amplitude of the wave received by the streamer, easily 
+extraction of AVO attributes, polar anisotropic media, etc.
  
 \section{Global optimization approach: Genetic Algorithm}
-\begin{wrapfigure}{l}{0.5\textwidth}
+\begin{wrapfigure}{l}{0.49\textwidth}
  \centering
  \begin{tikzpicture}[thick,scale=0.53, every 
  node/.style={scale=0.53},node distance = 2.4cm, auto]
@@ -237,10 +243,10 @@ attributes, polar anisotropic media, etc.
     \path [line] (newpop) |- (identify);
     \path [line] (evaluate) -| (sim);
     \path [line] (sim) |- (stop);
-  
 \end{tikzpicture}
-\caption{Flowchart of the genetic algorithm. % implemented in FORTRAN 
-77/90.}\label{fig.fluxo}
+\caption{Flowchart of the genetic algorithm.}
+% implemented in FORTRAN 77/90.}
+\label{fig.fluxo}
 \end{wrapfigure}
 
 The genetic algorithm (Figure~\ref{fig.fluxo}) is a technique used to perform 
@@ -253,7 +259,7 @@ guide the population to the best fit positions.
 
 The algorithm needs to \textit{select} a percentage of the population to start 
 the reproduction scheme where the \textit{crossover} and the 
-\textit{mutation} are the two classic tecniques to exchange genetic 
+\textit{mutation} are the two classic techniques to exchange genetic 
 information between the members and also randomly change the genetic 
 information to provide exploration of the solution space. In order to select 
 the members of the population we need to measure the fitness between each 
@@ -269,67 +275,94 @@ where, $x$ e $y$ are respectively the observed data and modelled data in
 the time domain and  $x^{T}$, $y^{T}$ are their transposes. In order to 
 constrain the inverse problem due to the dependency between S-wave 
 velocity and density with P-wave velocity, it was used the Gardner 
-\citep{Gardner01121974} and Castagna \citep{Castagna01041985} relations 
+\citep{Gardner1974} and Castagna \citep{Castagna1985} relations 
 to write S-wave and density as a function of P-wave.
 
 \section{Results}
 A synthetic model was used in order to verify the global optimization 
 method for AVO inversion and its relationships with the prior informations 
-(Gardner and Castagna constrains) and also to analyse the performance of 
-the forward modelling algorithm proposed. The physical parameters for the 
-synthetic model is described in the Table~\ref{tab.model}. The thickness 
-between the two 
-inner layers was chosen to be small enough to allow interaction between the 
-wavelets.
+(\cite{Gardner1974} and \cite{Castagna1985} constrains) and also to 
+analyse the performance of the forward modelling algorithm proposed. The 
+physical parameters for the synthetic model is described in the 
+Table~\ref{tab.model}. The thickness between the two inner layers was 
+chosen to be small enough to allow interaction between the wavelets.
 
-\begin{wraptable}{l}{0.5\textwidth}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. 
+%\documentclass[xcolor=table]{beamer}
+%\begin{table}[]
+%\centering
+%\caption{My caption}
+%\label{my-label}
+\begin{wraptable}{l}{0.49\textwidth}
 \caption{Model parameters.}
 \begin{adjustbox}{max width=0.46\textwidth}
 \label{tab.model}
-\begin{tabular}{@{}|
->{\columncolor[HTML]{9B9B9B}}c |cccc@{}}
+\begin{tabular}{@{}
+>{\columncolor[HTML]{FFFFFF}}c 
+>{\columncolor[HTML]{FFFFFF}}c 
+>{\columncolor[HTML]{FFFFFF}}c 
+>{\columncolor[HTML]{FFFFFF}}c 
+>{\columncolor[HTML]{FFFFFF}}c @{}}
 \toprule
-\textbf{Layers} & \multicolumn{1}{c|}{\cellcolor[HTML]{9B9B9B}\textbf{\begin{tabular}[c]{@{}c@{}}Thickness\\ (meters)\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{9B9B9B}\textbf{\begin{tabular}[c]{@{}c@{}}Vp \\ (m/s)\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{9B9B9B}\textbf{\begin{tabular}[c]{@{}c@{}}Vs\\ (m/s)\end{tabular}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{9B9B9B}\textbf{\begin{tabular}[c]{@{}c@{}}Density\\ (g/cc)\end{tabular}}} \\ \midrule
-1               & 1000                                                                                                               & 2000                                                                                                      & 551.72                                                                                                   & 1.5381                                                                                                         \\ \cmidrule(r){1-1}
-2               & 50                                                                                                                 & 2800                                                                                                      & 1241.38                                                                                                  & 1.6731                                                                                                         \\ \cmidrule(r){1-1}
-3               & 50                                                                                                                 & 2300                                                                                                      & 810.34                                                                                                   & 1.5928                                                                                                         \\ \cmidrule(r){1-1}
-4               & 500                                                                                                                & 3000                                                                                                      & 1413.80                                                                                                  & 1.7022                                                                                                         \\ \bottomrule
+\textbf{Layers} & \textbf{\begin{tabular}[c]{@{}c@{}}Thickness\\ 
+(m)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Vp \\ 
+(m/s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Vs\\ 
+(m/s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Density\\ 
+(g/cc)\end{tabular}} \\ \midrule
+1 & 1000 & 2000 & 551.72 & 1.5381 \\
+2 & 50 & 2800 & 1241.38 & 1.6731 \\
+3 & 50 & 2300 & 810.34 & 1.5928 \\
+4 & 500 & 3000 & 1413.80 & 1.7022 \\ \bottomrule
 \end{tabular}
+%\end{table}
 \end{adjustbox}
 \end{wraptable}
 
 The parameters used in the forward modelling shown in 
 Figure~\ref{fig.fluxo} was a zero phase Ricker wavelet with central frequency 
 in 40~Hz and discretization time of 2~ms. In order to perform the global 
-optimization the CMP gathers have to be previously corrected from the 
-\textit{normal moveout}.
+optimization the CMP gathers have to be previously corrected from the NMO.
 %!
 The parameters used in the \textit{genetic algorithm} is given by 
-\textit{selection rate} of $50\%$, $P_{mutation}$ = 0.1, $P_{update}$ = 
-0.47, $P_{crossover}$ = 0.90, 1000 members in the population and a 
-convergence criterion of 200 iterations.
+\textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1, 
+$P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the 
+population and a convergence criterion of 200 iterations.
 
 In the following results only the parameters from the fourth layer of the 
 model from Table~\ref{tab.model} will be shown in more detail due to the 
 limit of space. The Figure~\ref{fig2} shows the evolution of the genetic 
 algorithm solutions for the P-wave velocity parameter in the fourth layer 
-when running with and without the Gardner and Castagna constrains. As we 
-can see in Figure~\ref{fig2}(a), after few iterations the algorithm is already 
-guiding all the members in the population close to the correct position in 
-the solution space.
-
-However, the Figure~\ref{fig2}(b) shows that even with the lack of additional 
-constrains to restrict the solutions, the algorithm is leading the population 
-to particular solutions which are not so close to the correct one but are 
-good answers to the inverse problem as we can see in 
+when running with and without the \cite{Gardner1974} and 
+\cite{Castagna1985} constrains. As we can see in Figure~\ref{fig2-with}, 
+after few iterations the algorithm is already guiding all the members in the 
+population close to the correct position in the solution space.
+%!
+However, the Figure~\ref{fig2-without} shows that even with the lack of 
+additional constrains to restrict the solutions, the algorithm is leading the 
+population to particular solutions which are not so close to the correct one 
+but are good answers to the inverse problem as we can see in 
 Table~\ref{tab.recovered}.
 
 \begin{figure}[H]
-\centering
-\includegraphics[scale=0.32]{iterations_vp4_refeita}
+%\subfigcapskip-5pt
+\subfigtopskip-5pt
+\subfigbottomskip0pt
+\subfigure[]{
+    \includegraphics[width=0.49\textwidth]{evolution-sol-constrains}
+    \label{fig2-with} 
+}
+\subfigure[]{
+    \includegraphics[width=0.49\textwidth]{evolution-sol-no-constrains}
+    \label{fig2-without} 
+}
 \caption{Evolution of the genetic algorithm solutions for the P-wave 
-velocity parameter in the fourth layer when running with and without the 
-Gardner and Castagna constrains.}
+velocity parameter in the fourth layer when running with \subref{fig2-with} 
+and without \subref{fig2-without} the \cite{Gardner1974} and 
+\cite{Castagna1985} constrains.
+}
 %% Wanderson, assim que tivermos as figuras finais a gente tem que voltar 
 %%aqui e melhorar a descricao
 \label{fig2}
@@ -341,60 +374,49 @@ performed 301.000 forward modelling in 36 minutes. Even with more than
 $20\%$ of relative error in average, the best model recovered without the 
 constrains still produce a very similar CMP gather as we can verify by the 
 correlation coefficient value.
-
+%%
 %% Wanderson, vc fez a tab no site que eu te indiquei?
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
 \begin{table}[h!]
 %\caption{Recovered parameters of the model in the fourth layer when 
 %running with and without the Gardner and Castagna constrains.}
 \caption{Recovered parameters of the model with and without constrains.}
 \begin{adjustbox}{max width=\textwidth}
 \label{tab.recovered}
-\begin{tabular}{@{}|c|ccccc@{}}
+\begin{tabular}{@{}cccccc@{}}
 \toprule
-\rowcolor[HTML]{C0C0C0} 
-\textbf{Parameters}                                                                                & 
-\multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Synthetic Model}} & 
-\multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered
- Model\\ (with 
-constrains)\end{tabular}}}                                                             & 
-\multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Recovered
- Model\\ (without 
-constrains)\end{tabular}}}                                                         \\ \midrule
-\rowcolor[HTML]{C0C0C0} 
-                                                                                                   & 
-                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}}
-                                                                                                                        
-                                                                                                       & 
-                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}}
-                                                                                                    & 
-                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative
-                                                                                                    Percentual 
-                                                                                                   \\ 
-                                                                                                   Error\end{tabular}}}
-                                                                                                    & 
-                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Parameters}}
-                                                                                                    & 
-                                                                                                   \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{\begin{tabular}[c]{@{}c@{}}Relative
-                                                                                                    Percentual\\ 
-                                                                                                   Error\end{tabular}}}
-                                                                                                    \\ \midrule
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2000                                          & \cellcolor[HTML]{9AFF99}2000                                     & \cellcolor[HTML]{9AFF99}0.00                                                                                               & \cellcolor[HTML]{BBDAFF}2002                                     & \cellcolor[HTML]{BBDAFF}-0.10                                                                                             \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2800                                          & \cellcolor[HTML]{9AFF99}2788                                     & \cellcolor[HTML]{9AFF99}0.43                                                                                               & \cellcolor[HTML]{BBDAFF}2699                                     & \cellcolor[HTML]{BBDAFF}3.61                                                                                              \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}2300                                          & \cellcolor[HTML]{9AFF99}2280                                     & \cellcolor[HTML]{9AFF99}0.87                                                                                               & \cellcolor[HTML]{BBDAFF}2394                                     & \cellcolor[HTML]{BBDAFF}-4.09                                                                                             \\
-\multirow{-4}{*}{\cellcolor[HTML]{C0C0C0}\begin{tabular}[c]{@{}c@{}}P-wave\\ (m/s)\end{tabular}}   & \cellcolor[HTML]{FFFFC7}3000                                          & \cellcolor[HTML]{9AFF99}2971                                     & \cellcolor[HTML]{9AFF99}0.97                                                                                               & \cellcolor[HTML]{BBDAFF}2658                                     & \cellcolor[HTML]{BBDAFF}11.40                                                                                             \\ \midrule
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}551.72                                        & \cellcolor[HTML]{9AFF99}552.71                                   & \cellcolor[HTML]{9AFF99}-0.07                                                                                              & \cellcolor[HTML]{BBDAFF}778                                      & \cellcolor[HTML]{BBDAFF}-41.01                                                                                            \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}1241.38                                       & \cellcolor[HTML]{9AFF99}1231                                     & \cellcolor[HTML]{9AFF99}0.84                                                                                               & \cellcolor[HTML]{BBDAFF}1327                                     & \cellcolor[HTML]{BBDAFF}-6.90                                                                                             \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}810.34                                        & \cellcolor[HTML]{9AFF99}793                                      & \cellcolor[HTML]{9AFF99}2.14                                                                                               & \cellcolor[HTML]{BBDAFF}1106                                     & \cellcolor[HTML]{BBDAFF}-36.49                                                                                            \\
-\multirow{-4}{*}{\cellcolor[HTML]{C0C0C0}\begin{tabular}[c]{@{}c@{}}S-wave\\ (m/s)\end{tabular}}   & \cellcolor[HTML]{FFFFC7}1413                                          & \cellcolor[HTML]{9AFF99}1389                                     & \cellcolor[HTML]{9AFF99}1.75                                                                                               & \cellcolor[HTML]{BBDAFF}1358                                     & \cellcolor[HTML]{BBDAFF}3.95                                                                                              \\ \cmidrule(r){1-1}
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}1.5381                                        & \cellcolor[HTML]{9AFF99}1.538                                    & \cellcolor[HTML]{9AFF99}0.01                                                                                               & \cellcolor[HTML]{BBDAFF}1.1408                                   & \cellcolor[HTML]{BBDAFF}25.83                                                                                             \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}1.6731                                        & \cellcolor[HTML]{9AFF99}1.671                                    & \cellcolor[HTML]{9AFF99}0.13                                                                                               & \cellcolor[HTML]{BBDAFF}1.2932                                   & \cellcolor[HTML]{BBDAFF}22.71                                                                                             \\
-\cellcolor[HTML]{C0C0C0}                                                                           & \cellcolor[HTML]{FFFFC7}1.5928                                        & \cellcolor[HTML]{9AFF99}1.589                                    & \cellcolor[HTML]{9AFF99}0.24                                                                                               & \cellcolor[HTML]{BBDAFF}1.1466                                   & \cellcolor[HTML]{BBDAFF}28.01                                                                                             \\
-\multirow{-4}{*}{\cellcolor[HTML]{C0C0C0}\begin{tabular}[c]{@{}c@{}}Density\\ (g/cc)\end{tabular}} & \cellcolor[HTML]{FFFFC7}1.7022                                        & \cellcolor[HTML]{9AFF99}1.698                                    & \cellcolor[HTML]{9AFF99}0.25                                                                                               & \cellcolor[HTML]{BBDAFF}1.4416                                   & \cellcolor[HTML]{BBDAFF}15.31                                                                                             \\ \midrule
-\multicolumn{1}{|l|}{\cellcolor[HTML]{C0C0C0}Correlation Coef.}                                    & \multicolumn{1}{c|}{1}                                                & \multicolumn{2}{c|}{0.999887645}                                                                                                                                                              & \multicolumn{2}{c|}{0.999847412}                                                                                                                                                             \\ \bottomrule
+\multirow{2}{*}{\textbf{Parameters}} & \multirow{2}{*}{\textbf{Synthetic 
+Model}} & \multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered 
+Model\\ (with constrains)\end{tabular}}} & 
+\multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered Model\\ 
+(without constrains)\end{tabular}}} \\ \cmidrule(l){3-6} 
+ &  & \textbf{Parameters} & \textbf{Relative Error (\%)} & \textbf{Parameters} 
+ & \textbf{Relative Error (\%)} \\ \cmidrule(r){1-2}
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}P-wave\\ (m/s)\end{tabular}} & 
+2000 & 2000 & 0.00 & 2002 & -0.10 \\
+ & 2800 & 2788 & 0.43 & 2699 & 3.61 \\
+ & 2300 & 2280 & 0.87 & 2394 & -4.09 \\
+ & 3000 & 2971 & 0.97 & 2658 & 11.40 \\
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}S-wave\\ (m/s)\end{tabular}} & 
+551.72 & 552.71 & -0.07 & 778 & -41.01 \\
+ & 1241.38 & 1231 & 0.84 & 1327 & -6.90 \\
+ & 810.34 & 793 & 2.14 & 1106 & -36.49 \\
+ & 1413 & 1389 & 1.75 & 1358 & 3.95 \\
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Density\\ (g/cc)\end{tabular}} 
+& 1.5381 & 1.538 & 0.01 & 1.1408 & 25.83 \\
+ & 1.6731 & 1.671 & 0.13 & 1.2932 & 22.71 \\
+ & 1.5928 & 1.589 & 0.24 & 1.1466 & 28.01 \\
+ & 1.7022 & 1.698 & 0.25 & 1.4416 & 15.31 \\
+\cmidrule{1-6}
+\multicolumn{1}{l}{\textbf{Correlation Coef.}} & 1 & 
+\multicolumn{2}{c}{0.999887645} & \multicolumn{2}{c}{0.999847412} \\ 
+\bottomrule
 \end{tabular}
 \end{adjustbox}
 \end{table}
-
 
 \section{Conclusions}
 The forward modelling algorithm presented has shown excellent potential to 
@@ -409,19 +431,13 @@ to determine possible scenarios for the recovered parameters. Finally, for
 future work in this project will also introduce errors in the models and an 
 application to real data to verify the reliability of this technique.
 
-
-
 \section{Acknowledgements}
-
-This research was supported by Petrobras and CGG as well as the
-Brazilian research agencies CNPq, FAPESP, FINEP, and CAPES. The first author 
-W. C. Ferreira thanks to CAPES for the Science without
-Borders fellowship, Geokinetics and the Allied Geophysical Laboratories. H. B. Santos is grateful to CGG-Brazil and Petrobras for his 
-fellowship. Additional support for the authors was provided by the sponsors 
-of the \textit{Wave Inversion Technology (WIT) Consortium}.
-
-\att{Por favor, mencione todas as empresas que estao envolvidas, depois 
-arrumaremos essa parte - Acredito que sejam apenas essas que inseri }
+This research was supported by the Brazilian research agencies CAPES, CNPq, 
+FAPESP and FINEP. The first author W. C. Ferreira thanks to CAPES for the 
+Science Without Borders fellowship, Geokinetics and the Allied Geophysical 
+Laboratories. H. B. Santos is grateful to CGG-Brazil and Petrobras for his 
+fellowships. Additional support for the authors was provided by the 
+sponsors of the \textit{Wave Inversion Technology (WIT) Consortium}.
 
 \bibliography{EAGE2016}
 \end{document} 
