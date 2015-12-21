@@ -16,8 +16,8 @@
 #*.png
 *.dvi
 *.ps
-*.eps
-*.pdf
+#*.eps
+#*.pdf
 EAGE2016.pdf
 #Fig/
 
