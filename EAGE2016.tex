@@ -400,11 +400,56 @@ Model\\ (with constrains)\end{tabular}}} &
  & 2800 & 2788 & 0.43 & 2699 & 3.61 \\
  & 2300 & 2280 & 0.87 & 2394 & -4.09 \\
  & 3000 & 2971 & 0.97 & 2658 & 11.40 \\
+\cmidrule{2-6}
 \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}S-wave\\ (m/s)\end{tabular}} & 
 551.72 & 552.71 & -0.07 & 778 & -41.01 \\
  & 1241.38 & 1231 & 0.84 & 1327 & -6.90 \\
  & 810.34 & 793 & 2.14 & 1106 & -36.49 \\
  & 1413 & 1389 & 1.75 & 1358 & 3.95 \\
+\cmidrule{2-6}
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Density\\ (g/cc)\end{tabular}} 
+& 1.5381 & 1.538 & 0.01 & 1.1408 & 25.83 \\
+ & 1.6731 & 1.671 & 0.13 & 1.2932 & 22.71 \\
+ & 1.5928 & 1.589 & 0.24 & 1.1466 & 28.01 \\
+ & 1.7022 & 1.698 & 0.25 & 1.4416 & 15.31 \\
+\cmidrule{1-6}
+\multicolumn{1}{l}{\textbf{Correlation Coef.}} & 1 & 
+\multicolumn{2}{c}{0.999887645} & \multicolumn{2}{c}{0.999847412} \\ 
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+\begin{table}[h!]
+%\caption{Recovered parameters of the model in the fourth layer when 
+%running with and without the Gardner and Castagna constrains.}
+\caption{Recovered parameters of the model with and without constrains.}
+\begin{adjustbox}{max width=\textwidth}
+\label{tab.recovered}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\multirow{2}{*}{\textbf{Parameters}} & \multirow{2}{*}{\textbf{Synthetic 
+Model}} & \multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered 
+Model\\ (with constrains)\end{tabular}}} & 
+\multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered Model\\ 
+(without constrains)\end{tabular}}} \\ \cmidrule(l){3-6} 
+ &  & \textbf{Parameters} & \textbf{Relative Error (\%)} & \textbf{Parameters} 
+ & \textbf{Relative Error (\%)} \\ \cmidrule(r){1-2}
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}P-wave\\ (m/s)\end{tabular}} & 
+2000 & 2000 & 0.00 & 2002 & -0.10 \\
+ & 2800 & 2788 & 0.43 & 2699 & 3.61 \\
+ & 2300 & 2280 & 0.87 & 2394 & -4.09 \\
+ & 3000 & 2971 & 0.97 & 2658 & 11.40 \\
+\cmidrule{1-1}
+\multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}S-wave\\ (m/s)\end{tabular}} & 
+551.72 & 552.71 & -0.07 & 778 & -41.01 \\
+ & 1241.38 & 1231 & 0.84 & 1327 & -6.90 \\
+ & 810.34 & 793 & 2.14 & 1106 & -36.49 \\
+ & 1413 & 1389 & 1.75 & 1358 & 3.95 \\
+\cmidrule{1-1}
 \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Density\\ (g/cc)\end{tabular}} 
 & 1.5381 & 1.538 & 0.01 & 1.1408 & 25.83 \\
  & 1.6731 & 1.671 & 0.13 & 1.2932 & 22.71 \\
