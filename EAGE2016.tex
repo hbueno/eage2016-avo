@@ -261,43 +261,50 @@ extraction of AVO attributes, polar anisotropic media, etc.
 \label{fig.fluxo}
 \end{wrapfigure}
 
-The genetic algorithm (Figure~\ref{fig.fluxo}) is a technique used to perform 
-global optimizations based in the natural selection \citep{Holland1975}. In 
-order to simulate this process, the algorithm constantly modify the initial 
-pseudo-random population in order to reach local minima positions. 
-Initially, each member of the pseudo-random population is a potential 
-solution to the problem and after some iterations the genetic algorithm will 
-guide the population to the best fit positions.
+The genetic algorithm (Figure~\ref{fig.fluxo}) is a technique
+used to perform global optimizations based on the natural
+selection process \citep{Holland1975}. In order to simulate this
+process, the algorithm constantly modifies the initial
+pseudo-random population in order to reach local minima
+positions.  Initially, each member of the pseudo-random
+population is a potential solution to the problem and after some
+iterations the genetic algorithm guides the population to
+the best fit positions.
 
-The algorithm needs to \textit{select} a percentage of the population to start 
-the reproduction scheme where the \textit{crossover} and the 
-\textit{mutation} are the two classic techniques to exchange genetic 
-information between the members and also randomly change the genetic 
-information to provide exploration of the solution space. In order to select 
-the members of the population we need to measure the fitness between each 
-potential solution and the data we want to optimize. The objective function 
-used was proposed by \cite{Porsani2000} and is given by
+The algorithm needs to \textit{select} a percentage of the
+population to start the reproduction scheme where the
+\textit{crossover} and the \textit{mutation} are the two classic
+techniques to exchange genetic information between the members
+and also randomly change the genetic information to provide
+exploration of the solution space. In order to select the
+members of the population we need to measure the fitness between
+each potential solution and the data we want to optimize. The
+objective function used was proposed by \cite{Porsani2000} and
+is given by
 %!
 \begin{equation}
 h = \frac{2y^{T} x} {y^{T}y + x^{T}x} \ ,
 \label{eq.Porsani}
 \end{equation}
 %!
-where, $x$ e $y$ are respectively the observed data and modelled data in 
-the time domain and  $x^{T}$, $y^{T}$ are their transposes. In order to 
-constrain the inverse problem due to the dependency between S-wave 
-velocity and density with P-wave velocity, it was used the Gardner 
-\citep{Gardner1974} and Castagna \citep{Castagna1985} relations 
-to write S-wave and density as a function of P-wave.
+where, $x$ and $y$ are respectively the observed data and
+modelled data in the time domain and  $x^{T}$, $y^{T}$ are their
+transposes. In order to constrain the inverse problem due to the
+dependency between S-wave velocity and density with P-wave
+velocity, weused the Gardner \citep{Gardner1974} and
+Castagna \citep{Castagna1985} relations to write S-wave and
+density as a function of P-wave.
 
 \section{Results}
-A synthetic model was used in order to verify the global optimization 
-method for AVO inversion and its relationships with the prior informations 
-(\cite{Gardner1974} and \cite{Castagna1985} constrains) and also to 
-analyse the performance of the forward modelling algorithm proposed. The 
-physical parameters for the synthetic model is described in the 
-Table~\ref{tab.model}. The thickness between the two inner layers was 
-chosen to be small enough to allow interaction between the wavelets.
+A synthetic model was used in order to verify the global
+optimization method for AVO inversion and its relationships with
+the prior information (\cite{Gardner1974} and
+\cite{Castagna1985} constraints) and also to analyze the
+performance of the forward modelling algorithm proposed. The
+physical parameters for a simple synthetic model are described
+in the Table~\ref{tab.model}. The thickness between the two
+inner layers was chosen to be small enough to allow interaction
+between the wavelets.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -323,39 +330,42 @@ chosen to be small enough to allow interaction between the wavelets.
 (m)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Vp \\ 
 (m/s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Vs\\ 
 (m/s)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Density\\ 
-(g/cc)\end{tabular}} \\ \midrule
-1 & 1000 & 2000 & 551.72 & 1.5381 \\
-2 & 50 & 2800 & 1241.38 & 1.6731 \\
-3 & 50 & 2300 & 810.34 & 1.5928 \\
-4 & 500 & 3000 & 1413.80 & 1.7022 \\ \bottomrule
+(g/c^{3})\end{tabular}} \\ \midrule
+1 & 1000 & 2000 & 551.72 & 2.07 \\
+2 & 50 & 2800 & 1241.38 & 2.25 \\
+3 & 50 & 2300 & 810.34 & 2.14 \\
+4 & 500 & 3000 & 1413.80 & 2.29 \\ \bottomrule
 \end{tabular}
 %\end{table}
 \end{adjustbox}
 \end{wraptable}
 
-The parameters used in the forward modelling shown in 
-Figure~\ref{fig.fluxo} was a zero phase Ricker wavelet with central frequency 
-in 40~Hz and discretization time of 2~ms. In order to perform the global 
-optimization the CMP gathers have to be previously corrected from the NMO.
+The parameters used in the forward modelling was a zero-phase
+Ricker wavelet with central frequency in 40~Hz and time sample
+rate of 2~ms. In order to perform the global optimization the
+CMP gathers are NMO corrected with the $V_{p}$ function of the
+random model.
 %!
-The parameters used in the \textit{genetic algorithm} is given by 
-\textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1, 
-$P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the 
+The parameters used in the \textit{genetic algorithm} are given
+by a \textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1,
+$P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the
 population and a convergence criterion of 200 iterations.
 
-In the following results only the parameters from the fourth layer of the 
-model from Table~\ref{tab.model} will be shown in more detail due to the 
-limit of space. The Figure~\ref{fig2} shows the evolution of the genetic 
-algorithm solutions for the P-wave velocity parameter in the fourth layer 
-when running with and without the \cite{Gardner1974} and 
-\cite{Castagna1985} constrains. As we can see in Figure~\ref{fig2-with}, 
-after few iterations the algorithm is already guiding all the members in the 
-population close to the correct position in the solution space.
+In the following results only the parameters from the fourth
+layer of the model in Table~\ref{tab.model} are shown in more
+detail. Figure~\ref{fig2} shows the evolution of the genetic
+algorithm solutions for the P-wave velocity parameter in the
+fourth layer when running with and without the
+\cite{Gardner1974} and \cite{Castagna1985} constraints. As we
+can see in Figure~\ref{fig2-with}, after a few iterations the
+algorithm is already guiding all the members in the population
+close to the correct position in the solution space.
 %!
-However, the Figure~\ref{fig2-without} shows that even with the lack of 
-additional constrains to restrict the solutions, the algorithm is leading the 
-population to particular solutions which are not so close to the correct one 
-but are good answers to the inverse problem as we can see in 
+However, Figure~\ref{fig2-without} shows that even with the
+lack of additional constraints to restrict the solutions, the
+algorithm is leading the population to particular solutions
+which are not too close to the correct one but are good answers
+to the objective function of the inverse problem as we can see in
 Table~\ref{tab.recovered}.
 
 \begin{figure}[H]
@@ -380,14 +390,13 @@ and without \subref{fig2-without} the \cite{Gardner1974} and
 \label{fig2}
 \end{figure}
 
-In Table~\ref{tab.recovered} we can see the values for the best model 
-recovered with and without the constrains in the parameters. The algorithm 
-performed 301.000 forward modelling in 36 minutes. Even with more than 
-$20\%$ of relative error in average, the best model recovered without the 
-constrains still produce a very similar CMP gather as we can verify by the 
+In Table~\ref{tab.recovered} we can see the values for the best
+model recovered with and without the constrains in the
+parameters. The algorithm generated 301.000 forward synthetics in
+30 minutes. Even with more than $20\%$ of relative error in
+average, the best model recovered without the constrains still
+produce a very similar CMP gather as we can verify by the
 correlation coefficient value.
-%%
-%% Wanderson, vc fez a tab no site que eu te indiquei?
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
