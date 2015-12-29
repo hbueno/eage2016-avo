@@ -13,7 +13,7 @@ all:
 		mv $(PROJECT)_part2.pdf $(PROJECT)-abstract.pdf
 
 view:
-		xdg-open Preview $(PROJECT).pdf
+		open -a Preview $(PROJECT).pdf
 
 clean-all:
 		rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.pdf *.toc *.out *~ *.gz
