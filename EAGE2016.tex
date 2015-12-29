@@ -74,30 +74,25 @@ J.~Schleicher and A.~Novais}
 % Wanderson, geralmente a EAGE limita o numero de caracteres no abstract. 
 % Pode ser que tenhamos que edita-lo no momento de submeter.
 \begin{abstract}
-The amplitude variation with offset (AVO) inversion has been studied in 
-order to recover the P-wave, S-wave velocity and density parameters of the 
-stratified medium. A global optimization technique was used due to the 
-multi-parametric behaviour of the AVO inversions which is strongly affected 
-by how good is the initial information in model based schemes. An analyse 
-to verify the effects of the dependency between P-wave, S-wave velocity 
-and density in the recovered parameters was also performed using empirical 
-relations as constrains. However, the forward modelling is the main resource 
-consumer in such techniques. We have implemented a genetic algorithm 
-and a \textit{table based} ray theory algorithm was developed in order to 
-allow a large amount of models in the global search. Our results show that 
-the genetic algorithm was capable to recover the physical parameters with 
-good agreement for the examples using the empirical constraints, but was 
-also capable to converge to particular solutions which was far from the 
-correct answer, but good answers to explain the observed dataset. The 
-forward modelling algorithm has shown excellent performance to be used in 
-global optimization schemes allowing the use of a large number of members 
-in the population of the genetic algorithm.
-%%
-%% Wanderson, modifiquei essa parte, pois esses valores nao sao ou serao 
-%%constantes. Acho melhor deixar a informacao sem os numeros.
-%%The forward modelling algorithm has shown excellent performance to be 
-%%used in global optimization schemes being able to compute more than 
-%%300.000 synthetic seismograms in less than 30 minutes.
+Amplitude Variation with Offset (AVO) inversion provides estimates of
+the P-wave velocity, S-wave velocity and density of the stratified
+medium. A global optimization technique was selected for the inversion
+due to the multi-parametric behaviour of the AVO inversions which are
+strongly affected by the initial estimate of the model rock properties.
+An analysis to verify the dependency between P-wave, S-wave velocity and
+density in the recovered parameters was also performed using empirical
+relations as constraints. In inversion schemes, the forward modelling is
+often the most time consuming process. To reduce computation time, we
+have implemented a genetic algorithm and a \textit{table-based}
+ray-theory algorithm to allow us to implement a large amount of models
+in the global search. Our results show that the genetic algorithm was
+capable to recover the physical parameters with good agreement for the
+examples using the empirical constraints, but was also capable of
+converging to solutions which were far from the correct answer, but were
+good answers to explain the observed dataset. The forward modelling
+algorithm has shown excellent performance to be used in global
+optimization schemes allowing the use of a large number of members in
+the population of the genetic algorithm.
 \end{abstract}
 
 \newpage
