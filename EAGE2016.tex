@@ -128,48 +128,60 @@ optimization.  The genetic algorithm was based on findings of
 relationships as constrains to verify the dependency among the
 parameters.
 
-\section{Synthetic common-midpoint seismogram: forward modelling}
-The forward modelling algorithm implemented is the \textit{table-based ray 
-tracing}. The Earth model assumed is the isotropic layer cake model where 
-the parametric equation are used to compute the two-way traveltime 
-\citep{Geyer1959}, the equations are given by
+\section{Synthetic common-midpoint seismogram: forward
+modelling} 
+
+The forward modelling algorithm implemented is the
+\textit{table-based ray tracing}. The Earth model assumed is the
+isotropic layer model where the parametric equations are
+used to compute the two-way traveltimes and offset as a function
+of a constant ray parameter \citep{Geyer1959}, the
+equations are given by
 %!
-\begin{eqnarray}
-x & = & 2\sum_{i=1}^{n} \frac {h_{i}pv_{i}} {(1 -
-p^{2}v_{i}^{2})^{1/2}} \ ,\label{eq.x} \\
-t & = & 2\sum_{i=1}^{n} \frac {h_{i}} {v_{i}(1 - p^{2}v_{i}^{2})^{1/2}} \ ,
-\label{eq.t}
-\end{eqnarray}
+\begin{eqnarray} x & = & 2\sum_{i=1}^{n} \frac {h_{i}pv_{i}} {(1
+		- p^{2}v_{i}^{2})^{1/2}} \ ,\label{eq.x} \\ t & = &
+		2\sum_{i=1}^{n} \frac {h_{i}} {v_{i}(1 -
+		p^{2}v_{i}^{2})^{1/2}} \ , \label{eq.t} \end{eqnarray}
 %
-where $h_{i}$, $v_{i}$ and $p$ are, respectively, the thickness of the layers, 
-the velocities and the ray parameter which is defined by
+where $h_{i}$, $v_{i}$ and $p$ are, respectively, the
+layer thickness, velocity and ray parameter which is
+defined by
 %!
 \begin{equation}
 p = \frac{\sin(\theta_{i})}{v_{i}}\ ,\label{eq.p}
 \end{equation}
 %!
-where $\theta_i$ is the angle between the seismic ray and the vertical in the 
-$i$-th layer. Using a sonic log or other vertical velocity information is 
-possible to build four different tables (\textit{velocity, angle, traveltime, 
-offsets} using equations \ref{eq.x}, \ref{eq.t} and the Snell's Law to figure out 
-the transmitted angle to the layer below.
+where $\theta_i$ is the angle between the seismic ray and the
+vertical in the $i$-th layer. Using a sonic log or other
+vertical velocity information, three different
+two-dimensional tables (\textit{offset, traveltime and
+reflection coefficient}) are built starting with equations
+\ref{eq.x} and \ref{eq.t}.
 
-To start the process we assign angles varying from 0 to 90 degree in the first 
-row of the \textit{angle table}. The step between each cell will also 
-determine the accuracy of the modelling. Then, using Snell's Law and the 
-velocity of the first layer (first row of velocity table) we compute the 
-transmitted angle. In this fashion, recursively, we fill the \textit{angle table}. 
-The next step for the synthetic seismogram modelling requires the 
-calculation of the reflectivity at each interface. It was used the Shuey's 
-approximation \citep{Shuey1985} given by
+To start the process, the P-wave velocity as a function of depth
+is transformed to time. The same applies to the S-wave velocity
+and density. For the 2D traveltime table, there are 90 columns
+associated with the ray parameter when the incident angle in the
+first medium varies from $0\degree$ to $89\degree$. The rows are
+associated with the $t_{o}$ times in increments of the time
+sample interval. Now, the 2D tables for offset and traveltime
+can easily be determined using equations \ref{eq.x} and
+\ref{eq.t} respectively. Since the velocity function is sampled
+in equal increments of the sample rate the same way the 2D
+tables are, the computation of the incident angle for each cell
+in the 2D table is possible with equation \ref{eq.p}. With the
+incident angle known, the next step is to compute the 2D table
+of reflection coefficients at each interface. This was
+accomplished with Shuey's approximation \citep{Shuey1985} given by
 %!
 \begin{equation}
-R_{P} (\theta) = A + B\sin^{2}(\theta) + C\sin^{2}(\theta)\tan^{2}(\theta)
+R_{P} (\phi) = A + B\sin^{2}(\theta) + C\sin^{2}(\theta)\tan^{2}(\theta)
 \ , \label{eq.shuey}
 \end{equation}
 %!
-where $\theta$ is the incidence angle and the terms $A$, $B$ and $C$ are 
-defined as
+where $\phi$ is the incident angle, $\theta$ is the average of
+the incident and transmitted angles, and the terms $A$, $B$ and
+$C$ are defined as
 %?!
 \begin{equation}
 \begin{split}
@@ -182,23 +194,25 @@ C & = \frac{1}{2} \left(\frac{\triangle V_{P}}{V_{P}} \right) \ .
 \end{split}
 \end{equation}
 %!
-In these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$, $\triangle 
-V_{S} = V_{S2} - V_{S1}$, $\triangle \rho = \rho_{2} - \rho_{1}$, where 
-$V_{P}$, $V_{S}$ e $\rho$ are arithmetic averages from P-wave and S-wave 
-velocities and the density.
+In these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$,
+$\triangle V_{S} = V_{S2} - V_{S1}$, $\triangle \rho = \rho_{2}
+- \rho_{1}$, where $V_{P}$, $V_{S}$ and $\rho$ are arithmetic
+averages for P-wave and S-wave velocities and the density.
 
-Finally, in order to build the common-midpoint (CMP) synthetic 
-seismogram, we define which are the offsets to model and start a search 
-row-by-row inside the \textit{offset table} looking for the requested offsets. 
-Once the value is found, we go into the same cell position inside the 
-\textit{angle table}, \textit{traveltime table} and \textit{reflectivity table} to 
-place the reflection coefficient from that position in the correct time arrival 
-inside the trace.
+Finally, in order to build the common-midpoint (CMP) synthetic
+seismogram, we define which are the offsets to model and start a
+search row-by-row inside the \textit{offset table} looking for
+the requested offsets.  Once the cell is found for the specified
+offset, we go into the same cell position inside the
+\textit{traveltime} and \textit{reflectivity tables} to place
+the reflection coefficient from that position in the correct
+time arrival inside the trace.
 
-The algorithm is simple and provide the opportunity to be easily adapted to 
-study more complex effects such as the stretching in normal moveout (NMO) 
-correction, NMO without stretch (Raytrace NMO correction), array effects 
-which affect the amplitude of the wave received by the streamer, easily 
+The algorithm is simple and provides the opportunity to be
+easily adapted to study more complex effects such as the stretch
+in normal moveout (NMO) correction, NMO without stretch
+(ray-trace NMO correction), array effects which affect the
+amplitude of the wave received by the streamer, easily
 extraction of AVO attributes, polar anisotropic media, etc.
  
 \section{Global optimization approach: Genetic Algorithm}
