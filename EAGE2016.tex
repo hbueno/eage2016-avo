@@ -25,13 +25,12 @@
 \definecolor{darkgreen}{RGB}{0,127,0}
 
 % For pdf hyperlinks
-\usepackage{hyperref}
-\hypersetup{colorlinks=true}
-\hypersetup{citecolor=blue}
-\hypersetup{pdftitle={Global optimization for AVO inversion: analysis of ray 
-theory based forward modelling algorithm}}
-\hypersetup{pdfauthor={W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, 
-H.~B.~Santos, J.~Schleicher and A.~Novais}}
+\usepackage{hyperref} \hypersetup{colorlinks=true}
+\hypersetup{citecolor=blue} \hypersetup{pdftitle={Global
+optimization for AVO inversion: analysis of ray theory based
+forward modelling algorithm}}
+\hypersetup{pdfauthor={W.~C.~Ferreira, F.~Hilterman,
+L.~A.~Diogo, H.~B.~Santos, J.~Schleicher and A.~Novais}}
 % For making a print without color links
 \hypersetup{linkcolor=black,citecolor=black,filecolor=black,urlcolor=black}
 \hypersetup{linkcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue}
@@ -65,64 +64,68 @@ minimum height=3em]
 minimum height=3em]
 
 \begin{document}
-\title{Global optimization for AVO inversion: analysis of ray theory based 
-forward modelling algorithm}
-\author{W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, H.~B.~Santos, 
+\title{Global optimization for AVO inversion: analysis of ray
+theory based forward modelling algorithm}
+\author{W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, H.~B.~Santos,
 J.~Schleicher and A.~Novais}
 \maketitle
 
-% Wanderson, geralmente a EAGE limita o numero de caracteres no abstract. 
-% Pode ser que tenhamos que edita-lo no momento de submeter.
 \begin{abstract}
-Amplitude Variation with Offset (AVO) inversion provides estimates of
-the P-wave velocity, S-wave velocity and density of the stratified
-medium. A global optimization technique was selected for the inversion
-due to the multi-parametric behaviour of the AVO inversions which are
-strongly affected by the initial estimate of the model rock properties.
-An analysis to verify the dependency between P-wave, S-wave velocity and
-density in the recovered parameters was also performed using empirical
-relations as constraints. In inversion schemes, the forward modelling is
-often the most time consuming process. To reduce computation time, we
-have implemented a genetic algorithm and a \textit{table-based}
-ray-theory algorithm to allow us to implement a large amount of models
-in the global search. Our results show that the genetic algorithm was
-capable to recover the physical parameters with good agreement for the
-examples using the empirical constraints, but was also capable of
-converging to solutions which were far from the correct answer, but were
-good answers to explain the observed dataset. The forward modelling
-algorithm has shown excellent performance to be used in global
-optimization schemes allowing the use of a large number of members in
-the population of the genetic algorithm.
+Amplitude Variation with Offset (AVO) inversion provides
+estimates of the P-wave velocity, S-wave velocity and density of
+the stratified medium. A global optimization technique was
+selected for the inversion due to the multi-parametric behaviour
+of the AVO inversions which are strongly affected by the initial
+estimate of the model rock properties.  An analysis to verify
+the dependency between P-wave, S-wave velocity and density in
+the recovered parameters was also performed using empirical
+relations as constraints. In inversion schemes, the forward
+modelling is often the most time consuming process. To reduce
+computation time, we have implemented a genetic algorithm and a
+\textit{table-based} ray-theory algorithm to allow us to
+implement a large amount of models in the global search. Our
+results show that the genetic algorithm was capable to recover
+the physical parameters with good agreement for the examples
+using the empirical constraints, but was also capable of
+converging to solutions which were far from the correct answer,
+but were good answers to explain the observed dataset. The
+forward modelling algorithm has shown excellent performance to
+be used in global optimization schemes allowing the use of a
+large number of members in the population of the genetic
+algorithm.
 \end{abstract}
 
 \newpage
-% Wanderson, sinceramente eu nao sei se eh preciso escrever que o codigo 
-%esta em Fortran, ate pq isso pode mudar com o tempo/necessidade.
 \section{Introduction}
-The amplitude variation with offset (AVO) anomaly has been widely used in 
-the industry as a direct hydrocarbon indicator. However, applications to 
-inverse problems has also risen interest in the phenomenon. The 
-formulation to compute an estimative of the amplitudes with increasing 
-angle (offset) of incidence is classically attributed to \cite{Zoeppritz1919} 
-and \cite{Knott1899} for plane waves. \cite{Rosa1976} derived and verified 
-the ill-posedness of the Zoeppritz equations meaning that we have multiple 
-combinations of input to produce the same output.  Moreover, 
-\cite{Stoffa1991}, \cite{Mallick1995} and others suggest global optimization 
-schemes to treat the AVO inversion due to its multi-parametric formulation 
-which implies a very complex solution space with many local minima which 
-harden the process of finding good solutions. However, the process of 
-global optimizations requires many forward modellings which increase 
-considerably the time of computation. Many of the works published in 
-literature uses forward modelling algorithms based in techniques to solve 
-the wave equation, therefore demanding great computational power. This 
-project believes that ray theory is enough for many applications in 
-exploration seismology and provide an implementation of a forward 
-modelling algorithm called \textit{table-based ray theory} in order to
-verify its performance and boosts in computations of global optimizations.
-The technique implemented to perform the search in the solution space was
-the genetic algorithm based on findings of \cite{Stoffa1991} and
-\cite{Sen1992} and using the \cite{Gardner1974} and \cite{Castagna1985}
-empirical relationships as constrains to verify the dependency among the
+The methodology of AVO has been widely used in the industry as a
+direct hydrocarbon indicator. In order to provide a quantitative
+interpretation, AVO inversion to the rock properties has been
+exploited. In forward model, the computation of the reflection
+amplitude as a function of incident angle (offset) is
+classically attributed to \cite{Zoeppritz1919} and
+\cite{Knott1899} for plane waves. For the reverse model,
+\cite{Rosa1976} derived and verified the ill-posed nature of the
+inversion of Zoeppritz equations for rock properties, meaning
+that we have multiple combinations of input to produce the same
+output.  Moreover, \cite{Stoffa1991}, \cite{Mallick1995} and
+others suggest global optimization schemes to treat the AVO
+inversion due to its multi-parametric formulation which implies
+a very complex solution space with many local minima, which
+makes it difficult to find correct solutions. However, the
+process of global optimizations requires many forward models
+which increase considerably the time of computation. Many of the
+works published in literature use forward modelling algorithms
+based on the wave equation, which demands great computational
+power. This study is based on the premise that unconsolidated
+sediments with small rock-property changes between layers can be
+modeled with ray theory without a loss of resolution. For
+computational ease we have developed a forward modeling
+algorithm called \textit{table-based ray theory} in order to
+speed up the computation of synthetics seismograms for global
+optimization.  The genetic algorithm was based on findings of
+\cite{Stoffa1991} and \cite{Sen1992} and used the
+\cite{Gardner1974} and \cite{Castagna1985} empirical
+relationships as constrains to verify the dependency among the
 parameters.
 
 \section{Synthetic common-midpoint seismogram: forward modelling}
