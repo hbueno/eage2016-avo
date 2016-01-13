@@ -29,8 +29,8 @@
 % For pdf hyperlinks
 \usepackage{hyperref} \hypersetup{colorlinks=true}
 \hypersetup{citecolor=blue} \hypersetup{pdftitle={Global
-optimization for AVO inversion: analysis of ray theory based
-forward modelling algorithm}}
+optimization for AVO inversion: a genetic algorithm using a table-based
+ray-theory algorithm}}
 \hypersetup{pdfauthor={W.~C.~Ferreira, F.~Hilterman,
 L.~A.~Diogo, H.~B.~Santos, J.~Schleicher and A.~Novais}}
 % For making a print without color links
@@ -66,8 +66,8 @@ minimum height=3em]
 minimum height=3em]
 
 \begin{document}
-\title{Global optimization for AVO inversion: analysis of ray
-theory based forward modelling algorithm}
+\title{Global optimization for AVO inversion: a genetic algorithm using
+a table-based ray-theory algorithm}
 \author{W.~C.~Ferreira, F.~Hilterman, L.~A.~Diogo, H.~B.~Santos,
 J.~Schleicher and A.~Novais}
 \maketitle
@@ -75,57 +75,57 @@ J.~Schleicher and A.~Novais}
 \begin{abstract}
 Amplitude Variation with Offset (AVO) inversion provides
 estimates of the P-wave velocity, S-wave velocity and density of
-the stratified medium. A global optimization technique was
-selected for the inversion due to the multi-parametric behaviour
-of the AVO inversions which are strongly affected by the initial
-estimate of the model rock properties.  An analysis to verify
+a stratified medium. Global optimization is desirable
+for the inversion to account for the multi-parametric behaviour
+of the AVO inversion which is strongly affected by the initial
+estimates of the model rock properties.  We carried out an analysis to verify
 the dependency between P-wave, S-wave velocity and density in
-the recovered parameters was also performed using empirical
+the recovered parameters using empirical
 relations as constraints. In inversion schemes, the forward
 modelling is often the most time consuming process. To reduce
-computation time, we have implemented a genetic algorithm and a
-\textit{table-based} ray-theory algorithm to allow us to
-implement a large amount of models in the global search. Our
-results show that the genetic algorithm was capable to recover
-the physical parameters with good agreement for the examples
-using the empirical constraints, but was also capable of
-converging to solutions which were far from the correct answer,
-but were good answers to explain the observed dataset. The
+computation time, we have implemented a genetic algorithm using a
+\textit{table-based} ray-theory algorithm to allow for 
+a large amount of models in the global search. Our
+results show that the genetic algorithm was capable of recovering
+the physical parameters with good agreement for examples
+using the empirical constraints. However, it sometimes
+converged to solutions which were far from the correct answer,
+but were good models to explain the observed dataset. The
 forward modelling algorithm has shown excellent performance to
-be used in global optimization schemes allowing the use of a
+be used in global optimization schemes, because it allows the use of a
 large number of members in the population of the genetic
 algorithm.
 \end{abstract}
 
 \newpage
 \section{Introduction}
-The methodology of AVO has been widely used in the industry as a
-direct hydrocarbon indicator. In order to provide a quantitative
-interpretation, AVO inversion to the rock properties has been
-exploited. In forward model, the computation of the reflection
-amplitude as a function of incident angle (offset) is
-classically attributed to \cite{Zoeppritz1919} and
-\cite{Knott1899} for plane waves. For the reverse model,
+The methodology of AVO has been widely used in the industry as a direct
+hydrocarbon indicator. A more quantitative interpretation can be
+achieved by means of AVO inversion for the rock properties. For the
+forward modeling part,
+one classically calculates the reflection coefficients for
+plane waves as a function of incident angle (offset) using the formulas
+of \cite{Knott1899} and \cite{Zoeppritz1919}. For the reverse model,
 \cite{Rosa1976} derived and verified the ill-posed nature of the
 inversion of Zoeppritz equations for rock properties, meaning
 that we have multiple combinations of input to produce the same
-output.  Moreover, \cite{Stoffa1991}, \cite{Mallick1995} and
+output.  For that reason, \cite{Stoffa1991}, \cite{Mallick1995} and
 others suggest global optimization schemes to treat the AVO
-inversion due to its multi-parametric formulation which implies
-a very complex solution space with many local minima, which
+inversion due to its multi-parametric formulation, because its
+its very complex solution space with many local minima
 makes it difficult to find correct solutions. However, the
 process of global optimizations requires many forward models
-which increase considerably the time of computation. Many of the
+which considerably increase the computation time. Many of the
 works published in literature use forward modelling algorithms
-based on the wave equation, which demands great computational
+based on the wave equation, which demand great computational
 power. This study is based on the premise that unconsolidated
 sediments with small rock-property changes between layers can be
 modeled with ray theory without a loss of resolution. For
 computational ease we have developed a forward modeling
 algorithm called \textit{table-based ray theory} in order to
-speed up the computation of synthetics seismograms for global
-optimization.  The genetic algorithm was based on findings of
-\cite{Stoffa1991} and \cite{Sen1992} and used the
+speed up the computation of synthetic seismograms for global
+optimization.  The genetic algorithm is based on findings of
+\cite{Stoffa1991} and \cite{Sen1992} and uses the
 \cite{Gardner1974} and \cite{Castagna1985} empirical
 relationships as constrains to verify the dependency among the
 parameters.
@@ -133,31 +133,30 @@ parameters.
 \section{Synthetic common-midpoint seismogram: forward
 modelling} 
 
-The forward modelling algorithm implemented is the
-\textit{table-based ray tracing}. The Earth model assumed is the
-isotropic layer model where the parametric equations are
-used to compute the two-way traveltimes and offset as a function
-of a constant ray parameter \citep{Slotnick1959}, the
-equations are given by
+The forward modelling algorithm implemented is the \textit{table-based
+ray tracing}. It assumes an Earth model composed of $n$ horizontal
+isotropic layers. The parametric equations to compute the two-way
+traveltimes and offset as a function of a constant ray parameter are
+given by \citep{Slotnick1959}
 %!
 \begin{eqnarray} x & = & 2\sum_{i=1}^{n} \frac {h_{i}pv_{i}} {(1
-		- p^{2}v_{i}^{2})^{1/2}} \, \label{eq.x} \\ t & =& 
+		- p^{2}v_{i}^{2})^{1/2}} \ ,\label{eq.x} \\ t & = &
 		2\sum_{i=1}^{n} \frac {h_{i}} {v_{i}(1 -
 		p^{2}v_{i}^{2})^{1/2}} \ , \label{eq.t} \end{eqnarray}
 %
 where $h_{i}$, $v_{i}$ and $p$ are, respectively, the
-layer thickness, velocity and ray parameter which is
+layer thickness and velocity of the $i$th layer, and the ray parameter 
 defined by
 %!
 \begin{equation}
-p = \frac{\sin(\theta_{i})}{v_{i}}\ ,\label{eq.p}
+p = \frac{\sin(\theta_{i})}{v_{i}}\ .\label{eq.p}
 \end{equation}
 %!
-where $\theta_i$ is the angle between the seismic ray and the
-vertical in the $i$-th layer. Using a sonic log or other
-vertical velocity information, three different
+Here $\theta_i$ is the angle between the seismic ray and the
+vertical in the $i$th layer. Using a sonic log or other
+vertical velocity information, we build three different
 two-dimensional tables (\textit{offset, traveltime and
-reflection coefficient}) are built starting with equations
+reflection coefficient}) starting with equations
 \ref{eq.x} and \ref{eq.t}.
 
 To start the process, the P-wave velocity as a function of depth
@@ -172,7 +171,7 @@ can easily be determined using equations \ref{eq.x} and
 in equal increments of the sample rate the same way the 2D
 tables are, the computation of the incident angle for each cell
 in the 2D table is possible with equation \ref{eq.p}. With the
-incident angle known, the next step is to compute the 2D table
+incidence angle known, the next step is to compute the 2D table
 of reflection coefficients at each interface. This was
 accomplished with Shuey's approximation \citep{Shuey1985} given by
 %!
@@ -198,21 +197,24 @@ C & = \frac{1}{2} \left(\frac{\triangle V_{P}}{V_{P}} \right) \ .
 %!
 In these expressions, $\triangle V_{P} = V_{P2} - V_{P1}$,
 $\triangle V_{S} = V_{S2} - V_{S1}$, $\triangle \rho = \rho_{2}
-- \rho_{1}$, where $V_{P}$, $V_{S}$ and $\rho$ are arithmetic
-averages for P-wave and S-wave velocities and the density.
+- \rho_{1}$ are the differences between the P and S-wave velocity and
+density values, respectively, across an interface and $V_{P}$, $V_{S}$
+and $\rho$ are their arithmetic averages.
 
-Finally, in order to build the common-midpoint (CMP) synthetic
-seismogram, we define which are the offsets to model and start a
+In order to build a synthetic common-midpoint (CMP) section,
+we define which are the offsets to model and start a
 search row-by-row inside the \textit{offset table} looking for
 the requested offsets.  Once the cell is found for the specified
 offset, we go into the same cell position inside the
 \textit{traveltime} and \textit{reflectivity tables} to place
-the reflection coefficient from that position in the correct
-time arrival inside the trace.The algorithm is simple and provides the opportunity to be
-easily adapted to study more complex effects such as the stretch
+the reflection coefficient from that position at the correct
+time arrival inside the trace.
+
+Because the algorithm is very simple, it provides the potential of being
+adapted in the future to study more complex effects such as the stretch
 in normal moveout (NMO) correction, NMO without stretch
 (ray-trace NMO correction), array effects which affect the
-amplitude of the wave received by the streamer, easily
+amplitude of the wave received by the streamer, 
 extraction of AVO attributes, polar anisotropic media, etc.
  
 \section{Global optimization approach: Genetic Algorithm}
@@ -278,29 +280,29 @@ techniques to exchange genetic information between the members
 and also randomly change the genetic information to provide
 exploration of the solution space. In order to select the
 members of the population we need to measure the fitness between
-each potential solution and the data we want to optimize. The
-objective function used was proposed by \cite{Porsani2000} and
-is given by
+each potential solution and the data we want to optimize. For this
+purpose, we used the objective function of \cite{Porsani2000}
+given by
 %!
 \begin{equation}
 h = \frac{2y^{T} x} {y^{T}y + x^{T}x} \ ,
 \label{eq.Porsani}
 \end{equation}
 %!
-where, $x$ and $y$ are respectively the observed data and
+where, $x$ and $y$ are the observed and
 modelled data in the time domain and  $x^{T}$, $y^{T}$ are their
 transposes. In order to constrain the inverse problem due to the
 dependency between S-wave velocity and density with P-wave
-velocity, weused the Gardner \citep{Gardner1974} and
-Castagna \citep{Castagna1985} relations to write S-wave and
-density as a function of P-wave.
+velocity, we used the Gardner \citep{Gardner1974} and
+Castagna \citep{Castagna1985} relations to write S-wave velocity and
+density as a function of P-wave velocity.
 
 \section{Results}
-A synthetic model was used in order to verify the global
+We used a synthetic model in order to verify the global
 optimization method for AVO inversion and its relationships with
-the prior information (\cite{Gardner1974} and
-\cite{Castagna1985} constraints) and also to analyze the
-performance of the forward modelling algorithm proposed. The
+the prior information, i.e., the \cite{Gardner1974} and
+\cite{Castagna1985} constraints, and also to analyze the
+performance of the investigated forward modelling algorithm. The
 physical parameters for a simple synthetic model are described
 in the Table~\ref{tab.model}. The thickness between the two
 inner layers was chosen to be small enough to allow interaction
@@ -315,9 +317,9 @@ between the wavelets.
 %\centering
 %\caption{My caption}
 %\label{my-label}
-\begin{wraptable}{l}{0.3\textwidth}
-\caption{Model parameters used for the forward modelling.}
-\begin{adjustbox}{max width=0.3\textwidth}
+\begin{wraptable}{l}{0.49\textwidth}
+\caption{Model parameters.}
+\begin{adjustbox}{max width=0.46\textwidth}
 \label{tab.model}
 \begin{tabular}{@{}
 >{\columncolor[HTML]{FFFFFF}}c 
@@ -339,30 +341,37 @@ between the wavelets.
 %\end{table}
 \end{adjustbox}
 \end{wraptable}
-\vspace{-0.2cm}
-The parameters used in the forward modelling was a zero-phase
-Ricker wavelet with central frequency in 40~Hz and time sample
-rate of 2~ms. In order to perform the global optimization the
+
+For this simple model, we created a synthetic data set
+%using XXX modeling %AQUI FALTA DIZER COMO FOI MODELADO ???
+with
+a zero-phase
+Ricker wavelet with central frequency of 40~Hz and time sample
+rate of 2~ms. In order to perform the global optimization, the
 CMP gathers are NMO corrected with the $V_{p}$ function of the
 random model.
+%QUAL E ESSE MODELO ALEATORIO? ELE NAO FOI MENCIONADO ANTES. ???
 %!
 The parameters used in the \textit{genetic algorithm} are given
 by a \textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1,
 $P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the
-population and a convergence criterion of 200 iterations. In the
-following results is shown only the parameters for the fourth
-layer of the model in Table~\ref{tab.model}. Figure~\ref{fig2} shows the evolution of the genetic
-algorithm solutions for the P-wave velocity parameter in the
+population and a convergence criterion of 200 iterations.
+
+To study the quality of the inversion, we concentrate on the
+parameters of the fourth
+layer of the model in Table~\ref{tab.model}.
+Figure~\ref{fig2} shows the evolution of the genetic
+algorithm solutions for the inverted P-wave velocity parameter in the
 fourth layer when running with and without the
 \cite{Gardner1974} and \cite{Castagna1985} constraints. As we
 can see in Figure~\ref{fig2-with}, after a few iterations the
-algorithm is already guiding all the members in the population
+algorithm is already guiding all the members of the population
 close to the correct position in the solution space.
 %!
-However, Figure~\ref{fig2-without} shows that even with the
-lack of additional constraints to restrict the solutions, the
-algorithm is leading the population to particular solutions
-which are not too close to the correct one but are good answers
+However, Figure~\ref{fig2-without} shows that without the
+additional constraints to restrict the solutions, the
+algorithm is leading a significan part of the population to particular solutions
+that are not very close to the correct one but are good answers
 to the objective function of the inverse problem as we can see in
 Table~\ref{tab.recovered}.
 
@@ -387,42 +396,26 @@ and without \subref{fig2-without} the \cite{Gardner1974} and
 %%aqui e melhorar a descricao
 \label{fig2}
 \end{figure}
-\vspace{-0.8cm}
-In Table~\ref{tab.recovered} we can see the values for the best
-model recovered with and without the constrains in the
+
+In Table~\ref{tab.recovered} we have compiled the recovered parameters for the
+%best models
+models with best value of the objective function
+%QUAL E A AFIRMACAO CORRETA AQUI? Acredito que seja a segunda. ???
+recovered with and without the constrains in the
 parameters. The algorithm generated 301.000 forward synthetics in
 30 minutes. Even with more than $20\%$ of relative error in
 average, the best model recovered without the constrains still
 produce a very similar CMP gather as we can verify by the
 correlation coefficient value.
 
-\section{Conclusions}
-The forward modelling algorithm presented has shown excellent
-potential to be used in global optimization schemes by providing
-good performance with restricted computer power. The constraints
-are helpful in reaching the correct global minimum however the
-result without constraints indicate that we can still converge
-to incorrect results that satisfy the objective function. In our
-future research, the genetic algorithm will be formulated inside
-the Bayesian framework to provide solid statistical information
-about the distribution of the solutions during the iterations.
-It is expected to be able to visualize distinguishable
-concentration of particular solutions which could be useful to
-determine possible scenarios for the recovered parameters.
-Finally, for future work in this project will also introduce
-errors in the models and an application to real data to verify
-the reliability of this technique.
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{multirow}
-
 \begin{table}[h!]
-	\centering
 %\caption{Recovered parameters of the model in the fourth layer when 
 %running with and without the Gardner and Castagna constrains.}
-\caption{Recovered parameters for the model presented in Table 1 with
-and without the constrains.}
-\begin{adjustbox}{scale=0.7}
+\caption{Recovered parameters of the model with and without constrains.}
+\begin{adjustbox}{max width=\textwidth}
 \label{tab.recovered}
 \begin{tabular}{@{}cccccc@{}}
 \toprule
@@ -459,6 +452,22 @@ Model\\ (with constrains)\end{tabular}}} &
 \end{adjustbox}
 \end{table}
 
+\section{Conclusions}
+The forward modelling algorithm presented has shown excellent
+potential to be used in global optimization schemes by providing
+good performance with restricted computer power. The parameter constraints
+were helpful to reach the correct global minimum. However, the
+result without constraints indicate that the procedure can still converge
+to incorrect results that satisfy the objective function. In our
+future research, the genetic algorithm will be formulated inside
+the Bayesian framework to provide solid statistical information
+about the distribution of the solutions during the iterations.
+It is expected to be able to visualize distinguishable
+concentrations of particular solutions which could be useful to
+determine possible scenarios for the recovered parameters.
+%Finally, for future work in this project will also introduce
+%errors in the models and an application to real data to verify
+%the reliability of this technique.
 
 \section{Acknowledgements}
 This research was supported by the Brazilian research agencies CAPES, CNPq, 
