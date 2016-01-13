@@ -141,7 +141,7 @@ of a constant ray parameter \citep{Slotnick1959}, the
 equations are given by
 %!
 \begin{eqnarray} x & = & 2\sum_{i=1}^{n} \frac {h_{i}pv_{i}} {(1
-		- p^{2}v_{i}^{2})^{1/2}} \ ,\label{eq.x} \\ t & = &
+		- p^{2}v_{i}^{2})^{1/2}} \, \label{eq.x} \\ t & =& 
 		2\sum_{i=1}^{n} \frac {h_{i}} {v_{i}(1 -
 		p^{2}v_{i}^{2})^{1/2}} \ , \label{eq.t} \end{eqnarray}
 %
@@ -208,9 +208,7 @@ the requested offsets.  Once the cell is found for the specified
 offset, we go into the same cell position inside the
 \textit{traveltime} and \textit{reflectivity tables} to place
 the reflection coefficient from that position in the correct
-time arrival inside the trace.
-
-The algorithm is simple and provides the opportunity to be
+time arrival inside the trace.The algorithm is simple and provides the opportunity to be
 easily adapted to study more complex effects such as the stretch
 in normal moveout (NMO) correction, NMO without stretch
 (ray-trace NMO correction), array effects which affect the
@@ -317,9 +315,9 @@ between the wavelets.
 %\centering
 %\caption{My caption}
 %\label{my-label}
-\begin{wraptable}{l}{0.49\textwidth}
-\caption{Model parameters.}
-\begin{adjustbox}{max width=0.46\textwidth}
+\begin{wraptable}{l}{0.3\textwidth}
+\caption{Model parameters used for the forward modelling.}
+\begin{adjustbox}{max width=0.3\textwidth}
 \label{tab.model}
 \begin{tabular}{@{}
 >{\columncolor[HTML]{FFFFFF}}c 
@@ -341,7 +339,7 @@ between the wavelets.
 %\end{table}
 \end{adjustbox}
 \end{wraptable}
-
+\vspace{-0.2cm}
 The parameters used in the forward modelling was a zero-phase
 Ricker wavelet with central frequency in 40~Hz and time sample
 rate of 2~ms. In order to perform the global optimization the
@@ -351,11 +349,9 @@ random model.
 The parameters used in the \textit{genetic algorithm} are given
 by a \textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1,
 $P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the
-population and a convergence criterion of 200 iterations.
-
-In the following results only the parameters from the fourth
-layer of the model in Table~\ref{tab.model} are shown in more
-detail. Figure~\ref{fig2} shows the evolution of the genetic
+population and a convergence criterion of 200 iterations. In the
+following results is shown only the parameters for the fourth
+layer of the model in Table~\ref{tab.model}. Figure~\ref{fig2} shows the evolution of the genetic
 algorithm solutions for the P-wave velocity parameter in the
 fourth layer when running with and without the
 \cite{Gardner1974} and \cite{Castagna1985} constraints. As we
@@ -391,7 +387,7 @@ and without \subref{fig2-without} the \cite{Gardner1974} and
 %%aqui e melhorar a descricao
 \label{fig2}
 \end{figure}
-
+\vspace{-0.8cm}
 In Table~\ref{tab.recovered} we can see the values for the best
 model recovered with and without the constrains in the
 parameters. The algorithm generated 301.000 forward synthetics in
@@ -400,14 +396,33 @@ average, the best model recovered without the constrains still
 produce a very similar CMP gather as we can verify by the
 correlation coefficient value.
 
+\section{Conclusions}
+The forward modelling algorithm presented has shown excellent
+potential to be used in global optimization schemes by providing
+good performance with restricted computer power. The constraints
+are helpful in reaching the correct global minimum however the
+result without constraints indicate that we can still converge
+to incorrect results that satisfy the objective function. In our
+future research, the genetic algorithm will be formulated inside
+the Bayesian framework to provide solid statistical information
+about the distribution of the solutions during the iterations.
+It is expected to be able to visualize distinguishable
+concentration of particular solutions which could be useful to
+determine possible scenarios for the recovered parameters.
+Finally, for future work in this project will also introduce
+errors in the models and an application to real data to verify
+the reliability of this technique.
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{multirow}
+
 \begin{table}[h!]
+	\centering
 %\caption{Recovered parameters of the model in the fourth layer when 
 %running with and without the Gardner and Castagna constrains.}
-\caption{Recovered parameters of the model with and without constrains.}
-\begin{adjustbox}{max width=\textwidth}
+\caption{Recovered parameters for the model presented in Table 1 with
+and without the constrains.}
+\begin{adjustbox}{scale=0.7}
 \label{tab.recovered}
 \begin{tabular}{@{}cccccc@{}}
 \toprule
@@ -444,22 +459,6 @@ Model\\ (with constrains)\end{tabular}}} &
 \end{adjustbox}
 \end{table}
 
-\section{Conclusions}
-The forward modelling algorithm presented has shown excellent
-potential to be used in global optimization schemes by providing
-good performance with restricted computer power. The constraints
-are helpful in reaching the correct global minimum however the
-result without constraints indicate that we can still converge
-to incorrect results that satisfy the objective function. In our
-future research, the genetic algorithm will be formulated inside
-the Bayesian framework to provide solid statistical information
-about the distribution of the solutions during the iterations.
-It is expected to be able to visualize distinguishable
-concentration of particular solutions which could be useful to
-determine possible scenarios for the recovered parameters.
-Finally, for future work in this project will also introduce
-errors in the models and an application to real data to verify
-the reliability of this technique.
 
 \section{Acknowledgements}
 This research was supported by the Brazilian research agencies CAPES, CNPq, 
