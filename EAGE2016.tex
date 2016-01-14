@@ -127,7 +127,7 @@ speed up the computation of synthetic seismograms for global
 optimization.  The genetic algorithm is based on findings of
 \cite{Stoffa1991} and \cite{Sen1992} and uses the
 \cite{Gardner1974} and \cite{Castagna1985} empirical
-relationships as constrains to verify the dependency among the
+relationships as constraints to verify the dependency among the
 parameters.
 
 \section{Synthetic common-midpoint seismogram: forward
@@ -317,9 +317,9 @@ between the wavelets.
 %\centering
 %\caption{My caption}
 %\label{my-label}
-\begin{wraptable}{l}{0.49\textwidth}
-\caption{Model parameters.}
-\begin{adjustbox}{max width=0.46\textwidth}
+\begin{wraptable}{l}{0.3\textwidth}
+\caption{Model parameters to test the inversion scheme.}
+\begin{adjustbox}{max width=0.3\textwidth}
 \label{tab.model}
 \begin{tabular}{@{}
 >{\columncolor[HTML]{FFFFFF}}c 
@@ -342,22 +342,22 @@ between the wavelets.
 \end{adjustbox}
 \end{wraptable}
 
-For this simple model, we created a synthetic data set
-%using XXX modeling %AQUI FALTA DIZER COMO FOI MODELADO ???
-with
-a zero-phase
-Ricker wavelet with central frequency of 40~Hz and time sample
-rate of 2~ms. In order to perform the global optimization, the
-CMP gathers are NMO corrected with the $V_{p}$ function of the
-random model.
-%QUAL E ESSE MODELO ALEATORIO? ELE NAO FOI MENCIONADO ANTES. ???
-%!
+\vspace{-0.4cm}
+A synthetic data set was modelled with the table-based ray theory
+algorithm using the parameters from Table \ref{tab.model},
+%using XXX modeling %AQUI FALTA DIZER COMO FOI MODELADO ???  Foi
+%modelado com o algoritmo de tabelas descrito no começo
+a zero-phase Ricker wavelet with central frequency of 40~Hz, and a time
+sample rate of 2~ms. In order to perform the global optimization, each
+CMP gather modelled during each genetic algorithm run is NMO corrected.
+%QUAL E ESSE MODELO ALEATORIO? ELE NAO FOI MENCIONADO ANTES. ???  !
+% Aquela parte estava sobrando no texto. Devo ter escrito e apagado
+% algo e ela sobrou. O que eu queria dizer nessa frase era que cada
+% modelo gerado dentro do algoritmo genetico eh corrigido de NMO.
 The parameters used in the \textit{genetic algorithm} are given
 by a \textit{selection rate} of $50\%$, $P_{mutation}$~=~0.1,
 $P_{update}$~=~0.47, $P_{crossover}$~=~0.90,~1000 members in the
-population and a convergence criterion of 200 iterations.
-
-To study the quality of the inversion, we concentrate on the
+population and a convergence criterion of 200 iterations. To study the quality of the inversion, we concentrate on the
 parameters of the fourth
 layer of the model in Table~\ref{tab.model}.
 Figure~\ref{fig2} shows the evolution of the genetic
@@ -390,40 +390,63 @@ Table~\ref{tab.recovered}.
 \caption{Evolution of the genetic algorithm solutions for the P-wave 
 velocity parameter in the fourth layer when running with \subref{fig2-with} 
 and without \subref{fig2-without} the \cite{Gardner1974} and 
-\cite{Castagna1985} constrains.
+\cite{Castagna1985} constraints.
 }
 %% Wanderson, assim que tivermos as figuras finais a gente tem que voltar 
 %%aqui e melhorar a descricao
 \label{fig2}
 \end{figure}
-
+\vspace{-0.8cm}
 In Table~\ref{tab.recovered} we have compiled the recovered parameters for the
 %best models
 models with best value of the objective function
 %QUAL E A AFIRMACAO CORRETA AQUI? Acredito que seja a segunda. ???
-recovered with and without the constrains in the
+% A segunda afirmaçao eh mesmo a correta.
+%recovered 
+with and without the constraints on the
 parameters. The algorithm generated 301.000 forward synthetics in
-30 minutes. Even with more than $20\%$ of relative error in
-average, the best model recovered without the constrains still
+25 minutes. Even with more than $20\%$ of relative error in the
+average, the best model recovered without the constraints still
 produce a very similar CMP gather as we can verify by the
 correlation coefficient value.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{multirow}
+
+\section{Conclusions}
+The forward modelling algorithm presented has shown excellent
+potential to be used in global optimization schemes by providing
+good performance with restricted computer power. The parameter constraints
+were helpful to reach the correct global minimum. However, the
+result without constraints indicate that the procedure can still converge
+to incorrect results that satisfy the objective function. In our
+future research, the genetic algorithm will be formulated inside
+the Bayesian framework to provide solid statistical information
+about the distribution of the solutions during the iterations.
+It is expected to be able to visualize distinguishable
+concentrations of particular solutions which could be useful to
+determine possible scenarios for the recovered parameters.
+%Finally, for future work in this project will also introduce
+%errors in the models and an application to real data to verify
+%the reliability of this technique.
+
+
+
 \begin{table}[h!]
+	\centering
 %\caption{Recovered parameters of the model in the fourth layer when 
 %running with and without the Gardner and Castagna constrains.}
-\caption{Recovered parameters of the model with and without constrains.}
-\begin{adjustbox}{max width=\textwidth}
+\caption{Recovered parameters of the model with and without constraints.}
+\begin{adjustbox}{scale=0.7}
 \label{tab.recovered}
 \begin{tabular}{@{}cccccc@{}}
 \toprule
 \multirow{2}{*}{\textbf{Parameters}} & \multirow{2}{*}{\textbf{Synthetic 
 Model}} & \multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered 
-Model\\ (with constrains)\end{tabular}}} & 
+Model\\ (with constraints)\end{tabular}}} & 
 \multicolumn{2}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Recovered Model\\ 
-(without constrains)\end{tabular}}} \\ \cmidrule(l){3-6} 
+(without constraints)\end{tabular}}} \\ \cmidrule(l){3-6} 
  &  & \textbf{Parameters} & \textbf{Relative Error (\%)} & \textbf{Parameters} 
  & \textbf{Relative Error (\%)} \\ \cmidrule(r){1-2}
 \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}P-wave\\ (m/s)\end{tabular}} & 
@@ -451,24 +474,6 @@ Model\\ (with constrains)\end{tabular}}} &
 \end{tabular}
 \end{adjustbox}
 \end{table}
-
-\section{Conclusions}
-The forward modelling algorithm presented has shown excellent
-potential to be used in global optimization schemes by providing
-good performance with restricted computer power. The parameter constraints
-were helpful to reach the correct global minimum. However, the
-result without constraints indicate that the procedure can still converge
-to incorrect results that satisfy the objective function. In our
-future research, the genetic algorithm will be formulated inside
-the Bayesian framework to provide solid statistical information
-about the distribution of the solutions during the iterations.
-It is expected to be able to visualize distinguishable
-concentrations of particular solutions which could be useful to
-determine possible scenarios for the recovered parameters.
-%Finally, for future work in this project will also introduce
-%errors in the models and an application to real data to verify
-%the reliability of this technique.
-
 \section{Acknowledgements}
 This research was supported by the Brazilian research agencies CAPES, CNPq, 
 FAPESP and FINEP. The first author W. C. Ferreira thanks to CAPES for the 
