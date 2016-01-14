@@ -99,36 +99,38 @@ algorithm.
 
 \newpage
 \section{Introduction}
-The methodology of AVO has been widely used in the industry as a direct
-hydrocarbon indicator. A more quantitative interpretation can be
-achieved by means of AVO inversion for the rock properties. For the
-forward modeling part,
-one classically calculates the reflection coefficients for
-plane waves as a function of incident angle (offset) using the formulas
-of \cite{Knott1899} and \cite{Zoeppritz1919}. For the reverse model,
-\cite{Rosa1976} derived and verified the ill-posed nature of the
-inversion of Zoeppritz equations for rock properties, meaning
-that we have multiple combinations of input to produce the same
-output.  For that reason, \cite{Stoffa1991}, \cite{Mallick1995} and
-others suggest global optimization schemes to treat the AVO
-inversion due to its multi-parametric formulation, because its
-its very complex solution space with many local minima
-makes it difficult to find correct solutions. However, the
-process of global optimizations requires many forward models
-which considerably increase the computation time. Many of the
-works published in literature use forward modelling algorithms
-based on the wave equation, which demand great computational
-power. This study is based on the premise that unconsolidated
-sediments with small rock-property changes between layers can be
-modeled with ray theory without a loss of resolution. For
-computational ease we have developed a forward modeling
-algorithm called \textit{table-based ray theory} in order to
-speed up the computation of synthetic seismograms for global
+The methodology of AVO has been widely used in the industry
+as a direct hydrocarbon indicator. A more quantitative
+interpretation can be achieved by means of AVO inversion for
+the rock properties. For the forward modeling part, one
+classically calculates the reflection coefficients for plane
+waves as a function of incident angle (offset) using the
+formulas of \cite{Knott1899} and \cite{Zoeppritz1919}. For
+the reverse model, \cite{Rosa1976} derived and verified the
+ill-posed nature of the inversion of Zoeppritz equations for
+rock properties, meaning that we have multiple combinations
+of input to produce the same output. Besides, due to its
+multi-parametric formulation, the solution space is very
+complex with many local minima, which makes it difficult to
+find correct solutions. For those reasons,
+\cite{Stoffa1991}, \cite{Mallick1995} and others suggest
+global optimization schemes to treat the AVO
+inversion. However, the process of global optimizations
+requires many forward models which considerably increase the
+computation time. Many of the works published in literature
+use forward modelling algorithms based on the wave equation,
+which demand great computational power. This study is based
+on the premise that unconsolidated sediments with small
+rock-property changes between layers can be modeled with ray
+theory without a loss of resolution. For computational ease
+we have developed a forward modeling algorithm called
+\textit{table-based ray theory} in order to speed up the
+computation of synthetic seismograms for global
 optimization.  The genetic algorithm is based on findings of
 \cite{Stoffa1991} and \cite{Sen1992} and uses the
 \cite{Gardner1974} and \cite{Castagna1985} empirical
-relationships as constraints to verify the dependency among the
-parameters.
+relationships as constraints to verify the dependency among
+the parameters.
 
 \section{Synthetic common-midpoint seismogram: forward
 modelling} 
@@ -370,7 +372,7 @@ close to the correct position in the solution space.
 %!
 However, Figure~\ref{fig2-without} shows that without the
 additional constraints to restrict the solutions, the
-algorithm is leading a significan part of the population to particular solutions
+algorithm is leading a significant part of the population to particular solutions
 that are not very close to the correct one but are good answers
 to the objective function of the inverse problem as we can see in
 Table~\ref{tab.recovered}.
