@@ -79,7 +79,8 @@
 \RequirePackage{graphicx}
 \pagestyle{fancy} % load package
 \fancyhf{} % clear any existing styles
-\fancyhead[R]{{\includegraphics[height=0.57in,width=1.83in]{vie16.eps}}} % input logo top right, even and odd side, in margin
+%\fancyhead[R]{{\includegraphics[height=0.57in,width=1.83in]{vie16.eps}}} % input logo top right, even and odd side, in margin
+\fancyhead[R]{{\includegraphics[height=0.57in,width=1.83in]{vie16}}} % input logo top right, even and odd side, in margin
 \fancyfoot[C]{{\fontsize{10}{8}\selectfont{%
 78\textsuperscript{\tiny th} EAGE Conference \& Exhibition 2016\\\vspace{-1pt}
 Vienna, Austria, 30 May -- 2 June 2016}}} % footnote
