@@ -16,7 +16,7 @@ view:
 		xdg-open $(PROJECT).pdf &
 
 clean-all:
-		rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.pdf *.toc *.out *~ *.gz
+		rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps $(PROJECT)*.pdf *.toc *.out *~ *.gz
 
 clean:
 		rm -f *.log *.bak *.aux *.bbl *.blg *.idx *.toc *.out *~ *.gz
